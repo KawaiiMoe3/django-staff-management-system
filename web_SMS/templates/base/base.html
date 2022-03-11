@@ -59,7 +59,7 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
                 <li class="nav-item">
-                    Welcome, Username | Logout
+                    Welcome, {{request.user.username}} | <a href="{% url 'logout' %}">Logout</a>
                 </li>
             </ul>
         </nav>
@@ -81,7 +81,7 @@
                 <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                <a href="#" class="d-block ">Username</a>
+                <a href="#" class="d-block ">{{request.user.username}}</a>
                 </div>
             </div>
 
