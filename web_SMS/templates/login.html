@@ -1,27 +1,14 @@
-<!-- render static file in this html file -->
-{% load static %}
+<!-- inheritance templates -- login.html -->
+{% extends 'base/login.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SMSys | Login </title>
+  {% block title %}SMSys | Login{% endblock %}
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
-</head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
+  {% block content_body %}
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <!-- /.login-logo -->
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
       <a href="javascript:void(0)" class="h1"><b>SMS</b>ys</a>
     </div>
     <div class="card-body">
@@ -66,9 +53,9 @@
           <!-- /.col -->
         </div>
       </form>
-
+      
       <p class="mb-1">
-        <a href="forgot-password.html">I forgot my password</a>
+        <a href="{% url 'forgot-password' %}">I forgot my password</a>
       </p>
     </div>
     <!-- /.card-body -->
@@ -76,12 +63,6 @@
   <!-- /.card -->
 </div>
 <!-- /.login-box -->
-
-<!-- jQuery -->
-<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
-<!-- Bootstrap 4 -->
-<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-<!-- AdminLTE App -->
-<script src="{% static 'dist/js/adminlte.min.js' %}"></script>
 </body>
-</html>
+{% endblock %}
+
