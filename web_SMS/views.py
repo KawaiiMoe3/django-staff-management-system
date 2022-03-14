@@ -5,12 +5,12 @@ from django.contrib import messages
 import datetime
 # Create your views here.
 
-#Page Index
-def Index(request):
-    return render(request, 'index.html')
-
 #Page Login
 def Login(request):
+    return render(request, 'login.html')
+
+#doLogin function
+def doLogin(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -22,7 +22,7 @@ def Login(request):
             return redirect('index')
         else:
             # Return an 'invalid login' error message.
-            messages.success(request, "Username or Password are wrong!")
+            messages.error(request, "Username or Password are wrong!")
             return redirect('login')
     else:
         return render(request, 'login.html')
@@ -37,10 +37,6 @@ def Logout(request):
 #Forgot password
 def ForgotPassword(request):
     return render(request, 'forgot-password.html')
-
-#Page Contact
-def Contact(request):
-    return render(request, 'contact.html')
 
 #Dynamic time
 def getTime(request):

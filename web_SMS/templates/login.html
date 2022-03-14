@@ -14,7 +14,7 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="" method="POST">
+      <form action="{% url 'doLogin' %}" method="POST">
         {% csrf_token %}
         <div class="input-group mb-3">
           <input type="text" name="username" class="form-control" placeholder="Username" required>
@@ -34,10 +34,14 @@
         </div>
         <div class="row">
           <div class="col">
-            <span class="text-danger text-bold">
+            <span class="text-bold">
               {% if messages %}
                 {% for msg in messages %}
-                  {{ msg }}
+                  {% if msg.tags == 'error' %}
+                    <span class="text-danger">{{ msg }}</span>
+                  {% else %}
+                    <span class="text-success">{{ msg }}</span>
+                  {% endif %}
                 {% endfor %}
               {% endif %}
             </span>
