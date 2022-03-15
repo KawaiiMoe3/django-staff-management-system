@@ -26,6 +26,8 @@ class Admin(models.Model):
 class Staffs(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=255)
+    profile_pic = models.FileField()
     telno = models.CharField(max_length=255)
     address = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -79,7 +81,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         if instance.user_type == 1:
             Admin.objects.create(admin=instance)
         if instance.user_type == 2:
-            Staffs.objects.create(admin=instance)
+            Staffs.objects.create(admin=instance,profile_pic='',gender='')
 
 #This method will call after create_user_profile() execute
 @receiver(post_save, sender=CustomUser)

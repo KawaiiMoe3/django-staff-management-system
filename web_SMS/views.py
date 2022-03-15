@@ -18,8 +18,13 @@ def doLogin(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirect to a success page.
-            return redirect('index')
+            #Check user_type
+            if user.user_type == "1":
+                # Redirect to an admin template.
+                return redirect('index')
+            elif user.user_type == "2":
+                # Redirect to a staff template.
+                return HttpResponse("Staff login, " + str(user.user_type))
         else:
             # Return an 'invalid login' error message.
             messages.error(request, "Username or Password are wrong!")

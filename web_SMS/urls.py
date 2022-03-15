@@ -1,4 +1,3 @@
-from unicodedata import name
 from django.contrib import admin
 from django.urls import path
 from web_SMS import adminViews
@@ -10,7 +9,9 @@ urlpatterns = [
     path('doLogin', views.doLogin, name='doLogin'), #data login will submit at this view
     path('logout/', views.Logout, name='logout'), #logout
     path('forgot-password/', views.ForgotPassword, name='forgot-password'),
+    #For adminViews:
     path('index/', adminViews.Index, name='index'), #adminViews's index page
-    path('add_staff', adminViews.addStaff, name='add_staff'),
+    path('add_staff', adminViews.addStaff, name='add_staff'), #adminViews's add_staff page
+    path('doAddStaff', adminViews.doAddStaff, name='doAddStaff'), #staff info will submit to this view
     path('contact/', adminViews.Contact, name='contact'), #adminViews's contact page
 ]
