@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.utils import timezone
 # Create your models here.
 
 """
@@ -18,8 +19,8 @@ class CustomUser(AbstractUser):
 class Admin(models.Model):
     id = models.AutoField(primary_key=True)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
     objects = models.Manager()
 
 #Create Staffs model
@@ -30,17 +31,17 @@ class Staffs(models.Model):
     profile_pic = models.FileField()
     telno = models.CharField(max_length=255)
     address = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
     objects = models.Manager()
 
 #Create Attendance model
 class Attendance(models.Model):
     id = models.AutoField(primary_key=True)
     staff_id = models.ForeignKey(Staffs, on_delete=models.DO_NOTHING)
-    attendance_date = models.DateTimeField(auto_now_add=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    attendance_date = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
 
 #Create Attendance report model
 class AttendanceReport(models.Model):
@@ -48,8 +49,8 @@ class AttendanceReport(models.Model):
     staff_id = models.ForeignKey(Staffs, on_delete=models.DO_NOTHING)
     attendance_id = models.ForeignKey(Attendance, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
     objects = models.Manager()
 
 #Create Leave report staff model
@@ -59,8 +60,8 @@ class LeaveReportStaff(models.Model):
     leave_date = models.CharField(max_length=255)
     leave_message = models.TextField()
     leave_status = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
     objects = models.Manager()
 
 #Create feedback staff model
@@ -69,8 +70,8 @@ class FeedbackStaff(models.Model):
     staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
     feedback = models.TextField()
     feedback_reply = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
     objects = models.Manager()
 
 #This method will run only when data added in CustomUser

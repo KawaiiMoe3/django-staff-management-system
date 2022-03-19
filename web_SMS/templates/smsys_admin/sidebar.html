@@ -16,7 +16,7 @@
         <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-        <a href="#" class="d-block ">{{request.user.username}}</a>
+        <a href="#" class="d-block ">{{ user.username }}</a>
         </div>
     </div>
 
@@ -26,7 +26,8 @@
         <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
         <li class="nav-item">
-            <a href="{% url 'index' %}" class="nav-link active">
+            {% url 'index' as index %}
+            <a href="{{ index }}" class="nav-link {% if request.path == index %} active {% endif %}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
                 Dashboard
@@ -35,8 +36,29 @@
         </li>
         
         <li class="nav-header">ACTIONS</li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
+        {% url 'add_staff' as add_staff %}
+        {% url 'list_staff' as list_staff %}
+        {% url 'edit_staff' staff_id=id as edit_staff %}
+        <li 
+            class="nav-item 
+            {% if request.path == add_staff %} 
+                menu-open 
+            {% elif request.path == list_staff %}
+                menu-open
+            {% elif request.path == edit_staff %}
+                menu-open
+            {% endif %}}"
+        >
+            <a href="#" 
+                class="nav-link 
+                {% if request.path == add_staff %} 
+                    active 
+                {% elif request.path == list_staff %}
+                    active
+                {% elif request.path == edit_staff %}
+                    active
+                {% endif %}}"
+            >
             <i class="nav-icon fa-solid fa-user-tie"></i>
             <p>
                 Manage Staff
@@ -45,13 +67,23 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    {% url 'list_staff' as list_staff %}
+                    {% url 'edit_staff' staff_id=id as edit_staff %}
+                    <a href="{{ list_staff }}" 
+                        class="nav-link 
+                        {% if request.path == list_staff %} 
+                            active 
+                        {% elif request.path == edit_staff %}
+                            active
+                        {% endif %}"
+                    >
                     <i class="nav-icon fa-solid fa-users"></i>
                     <p>List Staff</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{% url 'add_staff' %}" class="nav-link">
+                    {% url 'add_staff' as add_staff %}
+                    <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
                     <i class="nav-icon fa-solid fa-user-plus"></i>
                     <p>Add Staff</p>
                     </a>

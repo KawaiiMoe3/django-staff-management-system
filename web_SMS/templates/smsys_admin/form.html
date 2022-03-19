@@ -1,0 +1,90 @@
+<form action="{% url 'doAddStaff' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="card-body">
+    <div class="form-group">
+      <label>Username</label>
+        <div class="input-group mb-3">
+            <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <div class="input-group mb-3">
+            <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <div class="input-group mb-3">
+            <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fa-solid fa-envelope"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Gender : </label>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="gender" value="male" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline1">Male</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="gender" value="female" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline2">Female</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Tel No</label>
+        <div class="input-group mb-3">
+            <input type="number" name="telno" class="form-control" placeholder="Enter telephone number" required>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fa-solid fa-phone"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <div class="input-group mb-3">
+            <input type="text" name="address" class="form-control" placeholder="Enter address" required>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fa-solid fa-location-dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Profile Image</label>
+        <div class="input-group mb-3">
+            <input type="file" name="profile_pic" class="form-control">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fa-solid fa-image"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- /.card-body -->
+
+  <div class="card-footer">
+    <button type="submit" class="btn btn-primary btn-block">
+        <i class="fa-regular fa-plus"></i>
+        Add Staff
+    </button>
+  </div>
+</form>

@@ -10,8 +10,11 @@ urlpatterns = [
     path('logout/', views.Logout, name='logout'), #logout
     path('forgot-password/', views.ForgotPassword, name='forgot-password'),
     #For adminViews:
-    path('index/', adminViews.Index, name='index'), #adminViews's index page
-    path('add_staff', adminViews.addStaff, name='add_staff'), #adminViews's add_staff page
-    path('doAddStaff', adminViews.doAddStaff, name='doAddStaff'), #staff info will submit to this view
-    path('contact/', adminViews.Contact, name='contact'), #adminViews's contact page
+    path('index/', adminViews.Index, name='index'), 
+    path('add_staff', adminViews.addStaff, name='add_staff'),
+    path('doAddStaff', adminViews.doAddStaff, name='doAddStaff'),
+    path('list_staff', adminViews.listStaff, name='list_staff'),
+    path('edit_staff/<str:staff_id>', adminViews.editStaff, name='edit_staff'),
+    path('doEditStaff', adminViews.doEditStaff, name='doEditStaff'),
+    path('contact/', adminViews.Contact, name='contact'), 
 ]
