@@ -38,7 +38,8 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                
+                {% url 'doAddStaff' as action_path %}
+                {% include 'smsys_admin/form.html' with form=form action_path=action_path button_text="Add Staff" %}
               </div>
               <!-- /.card -->
         </section>
