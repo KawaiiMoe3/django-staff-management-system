@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from web_SMS import adminViews
+from web_SMS import adminViews, staffViews
 from . import views
 
 urlpatterns = [
@@ -17,4 +17,7 @@ urlpatterns = [
     path('edit_staff/<str:staff_id>', adminViews.editStaff, name='edit_staff'),
     path('doEditStaff', adminViews.doEditStaff, name='doEditStaff'),
     path('contact/', adminViews.Contact, name='contact'), 
+    #For staffViews:
+    path('index', staffViews.Index, name='index_staff'),
+    path('contact', staffViews.Contact, name='contact_staff'),
 ]

@@ -24,7 +24,7 @@ def doLogin(request):
                 return redirect('index')
             elif user.user_type == "2":
                 # Redirect to a staff template.
-                return HttpResponse("Staff login, " + str(user.user_type))
+                return redirect('index_staff')
         else:
             # Return an 'invalid login' error message.
             messages.error(request, "Username or Password are wrong!")
