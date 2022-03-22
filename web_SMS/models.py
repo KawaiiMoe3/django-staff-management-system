@@ -59,13 +59,13 @@ class LeaveReportStaff(models.Model):
     staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
     leave_date = models.CharField(max_length=255)
     leave_message = models.TextField()
-    leave_status = models.BooleanField(default=False)
+    leave_status = models.IntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     objects = models.Manager()
 
 #Create feedback staff model
-class FeedbackStaff(models.Model):
+class FeedBackStaffs(models.Model):
     id = models.AutoField(primary_key=True)
     staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
     feedback = models.TextField()

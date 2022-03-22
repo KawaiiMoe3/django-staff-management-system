@@ -20,4 +20,10 @@ urlpatterns = [
     #For staffViews:
     path('index', staffViews.Index, name='index_staff'),
     path('contact', staffViews.Contact, name='contact_staff'),
+    path('apply-leave', staffViews.ApplyLeaveStaff, name='applyLeaveStaff'),
+    path('doApplyLeaveStaff', staffViews.doApplyLeaveStaff, name='doApplyLeaveStaff'),
+    path('leave-applied-history', staffViews.LeaveAppliedHistory, name='leaveAppliedHistory'),
+    path('feedback', staffViews.FeedbackStaff, name='feedbackStaff'),
+    path('doFeedbackStaff', staffViews.doFeedbackStaff, name='doFeedbackStaff'),
+    path('feedback-history-staff', staffViews.FeedbackHistoryStaffs, name='feedbackHistoryStaffs'),
 ]
