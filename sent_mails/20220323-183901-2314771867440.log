@@ -1,0 +1,30 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on 127.0.0.1:8000
+From: webmaster@localhost
+To: staff1@gmail.com
+Date: Wed, 23 Mar 2022 10:39:01 -0000
+Message-ID: <164803194189.16452.10314271880901336787@LAPTOP-2VBDL1QE>
+
+
+                Staff Management System -- SMSys
+------------------------------------------------------------------
+
+                        Hey staff1,
+    This email is to confirm that you requested a password reset.
+    To complete the password reset process, click the link below.
+
+http://127.0.0.1:8000/accounts/reset/Mg/b2r551-f026df22d46ca8f756e4c6fc389b4bcd/
+
+        *NOTE: IF LINK NOT WORKING COPY AND PASTE INTO URL
+------------------------------------------------------------------
+        If any questions, please do not hesitate to contact us.
+
+
+Hope you enjoy our services,
+The SMSys Team
+Email: support_cs@smsys.com
+Phone: +60 123 456789
+
+-------------------------------------------------------------------------------

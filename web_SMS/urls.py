@@ -1,10 +1,11 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from web_SMS import adminViews, staffViews
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', views.Login, name='login'), #login page
     path('doLogin', views.doLogin, name='doLogin'), #data login will submit at this view
     path('logout/', views.Logout, name='logout'), #logout

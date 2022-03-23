@@ -41,7 +41,7 @@ def Logout(request):
 
 #Forgot password
 def ForgotPassword(request):
-    return render(request, 'forgot-password.html')
+    return render(request, 'registration/password_reset_form.html')
 
 #Dynamic time
 def getTime(request):
