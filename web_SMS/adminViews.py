@@ -5,6 +5,7 @@ from django.contrib import messages
 from web_SMS.form import AddStaffForm, EditStaffForm
 from web_SMS.models import CustomUser, Staffs
 from django.core.files.storage import FileSystemStorage
+from django.views.decorators.csrf import csrf_exempt
 
 #Page Index
 def Index(request):
@@ -157,3 +158,27 @@ def doEditStaff(request):
 #Page Contact
 def Contact(request):
     return render(request, 'smsys_admin/contact.html')
+
+#checkEmailExist
+@csrf_exempt #Ajax request work without csrf_token
+def checkEmailExist(request):
+    email = request.POST.get("email")
+    #filter email check isit any email exists
+    user_obj = CustomUser.objects.filter(email=email).exists()
+    #Checking if object is not false then return true, else false
+    if user_obj:
+        return HttpResponse(True)
+    else:
+        return HttpResponse(False)
+
+#checkUsernameExist
+@csrf_exempt #Ajax request work without csrf_token
+def checkUsernameExist(request):
+    username = request.POST.get("username")
+    #filter email check isit any username exists
+    user_obj = CustomUser.objects.filter(username=username).exists()
+    #Checking if object is not false then return true, else false
+    if user_obj:
+        return HttpResponse(True)
+    else:
+        return HttpResponse(False)

@@ -135,16 +135,18 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = "web_SMS.CustomUser"
 
 #Settings EMAIL_BACKEND variable
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 #Settings path for storing sent email
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_mails")
+# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_mails")
 
-# EMAIL_HOST = "smtp.gmail.com"
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = "useonly.project@gmail.com"
-# EMAIL_HOST_PASSWORD = "OnlyForGroupProject123"
-# EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = "Staff Management System <noreply@smsys.com>"
+#Simple Mail Transfer Protocol(SMTP)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'useonly.project@gmail.com'
+EMAIL_HOST_PASSWORD = 'OnlyForGroupProject123'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "Staff Management System <useonly.project@gmail.com>"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

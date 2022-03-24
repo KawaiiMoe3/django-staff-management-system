@@ -2,9 +2,9 @@ from django import forms
 
 #Create AddStaffForm for addStaff.html
 class AddStaffForm(forms.Form):
-    username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class":"form-control", "placeholder":"Enter username"}))
+    username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput(attrs={"class":"form-control", "placeholder":"Enter username", "autocomplete":"off"}))
     password = forms.CharField(label="Password", max_length=50, widget=forms.PasswordInput(attrs={"class":"form-control", "placeholder":"Enter password"}))
-    email = forms.EmailField(label="Email", widget=forms.EmailInput(attrs={"class":"form-control", "placeholder":"Enter email"}))
+    email = forms.EmailField(label="Email", widget=forms.EmailInput(attrs={"class":"form-control", "placeholder":"Enter email", "autocomplete":"off"}))
     gender_choice = [
         ('Male','Male'),
         ('Female','Female')

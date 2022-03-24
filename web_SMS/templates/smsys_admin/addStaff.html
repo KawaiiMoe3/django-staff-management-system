@@ -45,3 +45,89 @@
         </section>
       <!-- /.content -->
     {% endblock %}
+
+    {% block site_js %}
+        <script type="text/javascript">
+          //Function will trigger when page is loaded
+          $(document).ready(function(){
+            //Function will trigger when user leave keyboard key
+            $("#id_email").keyup(function(){
+              //Get user's entry value
+              let email = $(this).val()
+
+              //If email != empty
+              if(email != ""){
+                //jQuery Ajax request
+                $.ajax({
+                  url: '{% url 'checkEmailExist' %}',
+                  type: 'POST',
+                  data: {email:email}
+                })
+                //Trigger when request success
+                .done(function(response){
+                  console.log(response)
+                  if(response == "True"){
+                    //Inserting this message after email input
+                    //Also remove this element before adding to ensure it will not create again and again
+                    $(".email_error").remove()
+                    $("<span class='text-danger email_error'>Email already exists!</span>").insertAfter("#id_email")
+                  }
+                  else{
+                    //Inserting this message after email input
+                    //Also remove this element before adding to ensure it will not create again and again
+                    $(".email_error").remove()
+                    $("<span class='text-success email_error'>Email is available.</span>").insertAfter("#id_email")
+                  }
+                })
+                //Trigger when request failure
+                .fail(function(){
+                  console.log("failure")
+                })
+              }
+              else{
+                $(".email_error").remove()
+              }
+            })
+
+            //Function will trigger when user leave keyboard key
+            $("#id_username").keyup(function(){
+              //Get user's entry value
+              let username = $(this).val()
+
+              //If username != empty
+              if(username != ""){
+                //jQuery Ajax request
+                $.ajax({
+                  url: '{% url 'checkUsernameExist' %}',
+                  type: 'POST',
+                  data: {username:username}
+                })
+                //Trigger when request success
+                .done(function(response){
+                  console.log(response)
+                  if(response == "True"){
+                    //Inserting this message after email input
+                    //Also remove this element before adding to ensure it will not create again and again
+                    $(".username_error").remove()
+                    $("<span class='text-danger username_error'>Username already exists!</span>").insertAfter("#id_username")
+                  }
+                  else{
+                    //Inserting this message after email input
+                    //Also remove this element before adding to ensure it will not create again and again
+                    $(".username_error").remove()
+                    $("<span class='text-success username_error'>Username is available.</span>").insertAfter("#id_username")
+                  }
+                })
+                //Trigger when request failure
+                .fail(function(){
+                  console.log("failure")
+                })
+              }
+              else{
+                $(".username_error").remove()
+              }
+              
+            })
+          })
+        </script>
+    {% endblock %}

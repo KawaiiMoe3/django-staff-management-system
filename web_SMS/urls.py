@@ -18,6 +18,8 @@ urlpatterns = [
     path('edit_staff/<str:staff_id>', adminViews.editStaff, name='edit_staff'),
     path('doEditStaff', adminViews.doEditStaff, name='doEditStaff'),
     path('contact/', adminViews.Contact, name='contact'), 
+    path('check-email-exist', adminViews.checkEmailExist, name='checkEmailExist'), 
+    path('check-username-exist', adminViews.checkUsernameExist, name='checkUsernameExist'), 
     #For staffViews:
     path('index', staffViews.Index, name='index_staff'),
     path('contact', staffViews.Contact, name='contact_staff'),
