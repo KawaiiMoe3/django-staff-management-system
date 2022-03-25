@@ -38,7 +38,16 @@
                             <tr>
                                 <td>{{ data.id }}</td>
                                 <td>{{ data.feedback }}</td>
-                                <td>{{ data.feedback_reply }}</td>
+                                <td>
+                                  {% if data.feedback_reply == "" %}
+                                     <span class="text-info text-bold">
+                                        <i class="fa-regular fa-face-smile"></i>
+                                        We have received your feedback, please be patiently waiting for a reply.
+                                      </span> 
+                                  {% else %}
+                                    {{ data.feedback_reply }}
+                                  {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

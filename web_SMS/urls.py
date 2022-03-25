@@ -20,6 +20,8 @@ urlpatterns = [
     path('contact/', adminViews.Contact, name='contact'), 
     path('check-email-exist', adminViews.checkEmailExist, name='checkEmailExist'), 
     path('check-username-exist', adminViews.checkUsernameExist, name='checkUsernameExist'), 
+    path('feedback-message', adminViews.FeedbackMessage, name='feedbackMessage'), 
+    path('feedback-message-reply', adminViews.FeedbackMessageReply, name='feedbackMessageReply'), 
     #For staffViews:
     path('index', staffViews.Index, name='index_staff'),
     path('contact', staffViews.Contact, name='contact_staff'),

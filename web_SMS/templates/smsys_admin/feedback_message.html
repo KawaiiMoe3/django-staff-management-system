@@ -1,0 +1,185 @@
+<!-- inheritance templates -- base.html -->
+{% extends 'base/base.html' %}
+<!-- render static file in this html file -->
+{% load static %}
+
+    {% block title %}Messages{% endblock %}
+    {% block site_css %}
+        <!-- DataTables -->
+        <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+    {% endblock %}
+
+    {% block content_title %}Messages{% endblock %}
+
+    {% block content_body %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                <h3 class="card-title">Messages History</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                <table id="example1" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#.</th>
+                            <th>Staff ID</th>
+                            <th>Username</th>
+                            <th>Messages/Sended On</th>
+                            <th>Reply</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in messages %}
+                        <tr>
+                            <td>{{ message.id }}</td>
+                            <td>{{ message.staff_id.admin.id }}</td>
+                            <td>{{ message.staff_id.admin.username }}</td>
+                            <td>{{ message.feedback }}, ({{ message.created_at }})</td>
+                            <td>
+                                {% if message.feedback_reply == "" %}
+                                    <button class="btn-sm btn-primary reply_open_modal" data-toggle="modal" data-target="#reply_modal">
+                                        <i class="fa-solid fa-reply"></i>
+                                        Reply
+                                    </button>
+                                {% else %}
+                                    {{ message.feedback_reply }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>#.</th>
+                            <th>Staff ID</th>
+                            <th>Username</th>
+                            <th>Messages</th>
+                            <th>Reply</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="reply_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Reply message to @<span id="reply_name" class="text-primary text-bold"></span></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="reply_id" name="reply_id">
+                <label>Message</label>
+                <textarea class="form-control" id="reply_message" cols="10" rows="5"></textarea>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button id="reply_btn" type="button" class="btn btn-primary">Send Reply</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endblock %}
+
+{% block site_js %}
+    <!-- DataTables  & Plugins -->
+    <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/jszip/jszip.min.js' %}"></script>
+    <script src="{% static 'plugins/pdfmake/pdfmake.min.js' %}"></script>
+    <script src="{% static 'plugins/pdfmake/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+
+    <script>
+        $(function () {
+          $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+          $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+          });
+        });
+    </script>
+
+    <script>
+        //Function will trigger when page is ready
+        $(document).ready(function(){
+            //Click listener : Get the current ID(#.) and username from current row when button clicked
+            $(".reply_open_modal").click(function(){
+                let id = $(this).parents("tr").children("td:eq(0)").text()
+                let username = $(this).parents("tr").children("td:eq(2)").text()
+                //Update ID value in hidden input and Show the username in span
+                $("#reply_id").val(id)
+                $("#reply_name").text(username)
+            })
+
+            //Get id of Send Reply button
+            $(document).on("click", "#reply_btn", function(){
+                //After clicked, the button cannot press until reply sent successfully
+                $(this).attr("disabled", "disabled")
+                //Meanwhile, the button will change the text to "Sending Reply..."
+                $(this).text("Sending Reply...")
+                
+                //Get id and textarea's value
+                let id = $("#reply_id").val()
+                let message = $("#reply_message").val()
+
+                //jQuery Ajax request
+                $.ajax({
+                    url : '{% url 'feedbackMessageReply' %}',
+                    type : 'POST',
+                    data : {reply_id:id, reply_message:message},
+                })
+                //Trigger when request success
+                .done(function(response){
+                    if(response == "True"){
+                        alert("Reply Sent")
+                    }
+                    else{
+                        alert("Failure to send your reply...")
+                    }
+                    //Reload the current page after reply sent
+                    location.reload()
+                })
+                //Trigger when request failure
+                .fail(function(){
+                    alert("Failure to send your reply...")
+                })
+            })
+        })
+    </script>
+{% endblock %}

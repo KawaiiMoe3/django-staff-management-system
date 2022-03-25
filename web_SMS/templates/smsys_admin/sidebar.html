@@ -39,6 +39,7 @@
         {% url 'add_staff' as add_staff %}
         {% url 'list_staff' as list_staff %}
         {% url 'edit_staff' staff_id=id as edit_staff %}
+        {% url 'feedbackMessage' as feedbackMessage %}
         <li 
             class="nav-item 
             {% if request.path == add_staff %} 
@@ -90,13 +91,34 @@
                 </li>
             </ul>
         </li>
-        <li class="nav-item">
-            <a href="pages/gallery.html" class="nav-link">
-            <i class="nav-icon far fa-image"></i>
+        <li 
+            class="nav-item 
+            {% if request.path == feedbackMessage %} 
+                menu-open
+            {% endif %}"
+        >
+            <a href="#" 
+                class="nav-link 
+                {% if request.path == feedbackMessage %} 
+                    active
+                {% endif %}"
+            >
+            <i class="nav-icon fa-solid fa-comment"></i>
             <p>
-                Gallery
+                Feedback
+                <i class="fas fa-angle-left right"></i>
             </p>
             </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    {% url 'feedbackMessage' as feedbackMessage %}
+                    <a href="{{ feedbackMessage }}" class="nav-link {% if request.path == feedbackMessage %} active {% endif %}"
+                    >
+                    <i class="nav-icon fa-solid fa-paper-plane"></i>
+                    <p>Messages</p>
+                    </a>
+                </li>
+            </ul>
         </li>
         
         </ul>

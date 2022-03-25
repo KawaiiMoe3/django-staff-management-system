@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from web_SMS.form import AddStaffForm, EditStaffForm
-from web_SMS.models import CustomUser, Staffs
+from web_SMS.models import CustomUser, Staffs, FeedBackStaffs
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_exempt
 
@@ -182,3 +182,27 @@ def checkUsernameExist(request):
         return HttpResponse(True)
     else:
         return HttpResponse(False)
+
+#FeedbackMessage 
+def FeedbackMessage(request):
+    #Get all the element of FeedBackStaffs model
+    messages = FeedBackStaffs.objects.all()
+    context = {
+        'messages' : messages,
+    }
+    return render(request, 'smsys_admin/feedback_message.html', context)
+
+#FeedbackMessageReply
+@csrf_exempt #Ajax request work without csrf_token
+def FeedbackMessageReply(request):
+    #Get id and reply_message from user input
+    feedback_id = request.POST.get("reply_id")
+    reply_message = request.POST.get("reply_message")
+
+    try:
+        feedback = FeedBackStaffs.objects.get(id=feedback_id)
+        feedback.feedback_reply = reply_message
+        feedback.save()
+        return HttpResponse("True")
+    except:
+        return HttpResponse("False")
