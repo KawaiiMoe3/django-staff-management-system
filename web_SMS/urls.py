@@ -22,6 +22,9 @@ urlpatterns = [
     path('check-username-exist', adminViews.checkUsernameExist, name='checkUsernameExist'), 
     path('feedback-message', adminViews.FeedbackMessage, name='feedbackMessage'), 
     path('feedback-message-reply', adminViews.FeedbackMessageReply, name='feedbackMessageReply'), 
+    path('view-staff-leave', adminViews.ViewStaffLeave, name='viewStaffLeave'),
+    path('doApproveStaffLeave/<str:leave_id>', adminViews.doApproveStaffLeave, name='doApproveStaffLeave'),
+    path('doRejectStaffLeave/<str:leave_id>', adminViews.doRejectStaffLeave, name='doRejectStaffLeave'),
     #For staffViews:
     path('index', staffViews.Index, name='index_staff'),
     path('contact', staffViews.Contact, name='contact_staff'),

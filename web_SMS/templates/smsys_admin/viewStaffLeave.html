@@ -3,7 +3,7 @@
 <!-- render static file in this html file -->
 {% load static %}
 
-    {% block title %}Messages{% endblock %}
+    {% block title %}Staff Leave{% endblock %}
     {% block site_css %}
         <!-- DataTables -->
         <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
     {% endblock %}
 
-    {% block content_title %}Messages{% endblock %}
+    {% block content_title %}Staff Leave{% endblock %}
 
     {% block content_body %}
     <!-- Main content -->
@@ -21,7 +21,7 @@
             <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                <h3 class="card-title">Messages History</h3>
+                <h3 class="card-title">Apply Leave For Staff</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -31,25 +31,65 @@
                             <th>#.</th>
                             <th>Staff ID</th>
                             <th>Username</th>
-                            <th>Messages/Sended On</th>
-                            <th>Reply</th>
+                            <th>Leave Date</th>
+                            <th>Reasons</th>
+                            <th>Leave Status</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for message in messages %}
+                        {% for leave in leaves %}
                         <tr>
-                            <td>{{ message.id }}</td>
-                            <td>{{ message.staff_id.admin.id }}</td>
-                            <td>{{ message.staff_id.admin.username }}</td>
-                            <td>{{ message.feedback }}, ({{ message.created_at }})</td>
+                            <td>{{ leave.id }}</td>
+                            <td>{{ leave.staff_id.admin.id }}</td>
+                            <td>{{ leave.staff_id.admin.username }}</td>
+                            <td>{{ leave.leave_date }}</td>
+                            <td>{{ leave.leave_message }}</td>
                             <td>
-                                {% if message.feedback_reply == "" %}
-                                    <button class="btn-sm btn-primary reply_open_modal" data-toggle="modal" data-target="#reply_modal">
-                                        <i class="fa-solid fa-reply"></i>
-                                        Reply
-                                    </button>
+                                {% if leave.leave_status == 1 %}
+                                    <span class="text-success text-bold">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        Approved
+                                    </span>
+                                {% elif leave.leave_status == 2 %}
+                                    <span class="text-danger text-bold">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                        Rejected
+                                    </span>
                                 {% else %}
-                                    <span class="text-primary">{{ message.feedback_reply }}</span>
+                                    <span class="text-info text-bold">
+                                        <i class="fa-solid fa-spinner"></i>
+                                        Pending
+                                    </span>
+                                {% endif %} 
+                            </td>
+                            <td>
+                                {% if leave.leave_status == 0 %}
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <a href="{% url 'doApproveStaffLeave' leave_id=leave.id %}" class="btn-sm btn-success">
+                                                <i class="fa-solid fa-circle-check"></i>
+                                                Approve
+                                            </a>
+                                        </div>
+                                        <hr>
+                                        <div class="col-sm-10">
+                                            <a href="{% url 'doRejectStaffLeave' leave_id=leave.id %}" class="btn-sm btn-danger">
+                                                <i class="fa-solid fa-circle-xmark"></i>
+                                                Reject
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% elif leave.leave_status == 1 %}
+                                    <span class="text-primary">
+                                        <i class="fa-solid fa-check"></i>
+                                        Action on {{ leave.updated_at }}
+                                    </span>
+                                {% elif leave.leave_status == 2 %}
+                                    <span class="text-primary">
+                                        <i class="fa-solid fa-check"></i>
+                                        Action on {{ leave.updated_at }}
+                                    </span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -60,8 +100,10 @@
                             <th>#.</th>
                             <th>Staff ID</th>
                             <th>Username</th>
-                            <th>Messages</th>
-                            <th>Reply</th>
+                            <th>Leave Date</th>
+                            <th>Reasons</th>
+                            <th>Leave Status</th>
+                            <th>Actions</th>
                         </tr>
                     </tfoot>
                 </table>

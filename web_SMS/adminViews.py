@@ -1,9 +1,10 @@
 #create adminViews
 from django.http import HttpResponse
+from datetime import datetime
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from web_SMS.form import AddStaffForm, EditStaffForm
-from web_SMS.models import CustomUser, Staffs, FeedBackStaffs
+from web_SMS.models import CustomUser, LeaveReportStaff, Staffs, FeedBackStaffs
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_exempt
 
@@ -206,3 +207,33 @@ def FeedbackMessageReply(request):
         return HttpResponse("True")
     except:
         return HttpResponse("False")
+
+#ViewStaffLeave
+def ViewStaffLeave(request):
+    #Get all the LeaveReportStaff model's objects
+    leaves = LeaveReportStaff.objects.all()
+    #Create a dictionary
+    context = {
+        "leaves" : leaves,
+    }
+    return render(request, 'smsys_admin/viewStaffLeave.html', context)
+
+#doApproveStaffLeave
+def doApproveStaffLeave(request, leave_id):
+    #Get the leave data by ID from LeaveReportStaff model's objects
+    leave = LeaveReportStaff.objects.get(id=leave_id)
+    #Change the leave_status to Approved (1)
+    leave.leave_status = 1
+    leave.updated_at = datetime.now()
+    leave.save()
+    return redirect('viewStaffLeave')
+
+#doApproveStaffLeave
+def doRejectStaffLeave(request, leave_id):
+    #Get the leave data by ID from LeaveReportStaff model's objects
+    leave = LeaveReportStaff.objects.get(id=leave_id)
+    #Change the leave_status to Rejected (2)
+    leave.leave_status = 2
+    leave.updated_at = datetime.now()
+    leave.save()
+    return redirect('viewStaffLeave')
