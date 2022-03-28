@@ -237,3 +237,36 @@ def doRejectStaffLeave(request, leave_id):
     leave.updated_at = datetime.now()
     leave.save()
     return redirect('viewStaffLeave')
+
+#profileAdmin
+def editProfileAdmin(request):
+    #Get id from CustomUser model
+    user = CustomUser.objects.get(id=request.user.id)
+    #Create a dictionary
+    context = {
+        'user' : user,
+    }
+    return render(request, 'smsys_admin/edit_profile_admin.html', context)
+
+#doEditProfileAdmin
+def doEditProfileAdmin(request):
+    if request.method == "POST":
+        #Get the field value from user input
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        try:
+            customuser = CustomUser.objects.get(id=request.user.id)
+            customuser.username = username
+            customuser.email = email
+            #Change password if password field is not none and empty
+            if password != None and password != "":
+                customuser.set_password(password)
+            customuser.save()
+            messages.success(request, "Profile edited successfully!")
+            return redirect('editProfileAdmin')
+        except:
+            messages.error(request, "Profile edited failure...Please try again.")
+            return redirect('editProfileAdmin')
+    else:
+        return redirect('editProfileAdmin')

@@ -25,6 +25,8 @@ urlpatterns = [
     path('view-staff-leave', adminViews.ViewStaffLeave, name='viewStaffLeave'),
     path('doApproveStaffLeave/<str:leave_id>', adminViews.doApproveStaffLeave, name='doApproveStaffLeave'),
     path('doRejectStaffLeave/<str:leave_id>', adminViews.doRejectStaffLeave, name='doRejectStaffLeave'),
+    path('edit-profile-admin', adminViews.editProfileAdmin, name='editProfileAdmin'),
+    path('doEditProfileAdmin', adminViews.doEditProfileAdmin, name='doEditProfileAdmin'),
     #For staffViews:
     path('index', staffViews.Index, name='index_staff'),
     path('contact', staffViews.Contact, name='contact_staff'),
@@ -34,4 +36,8 @@ urlpatterns = [
     path('feedback', staffViews.FeedbackStaff, name='feedbackStaff'),
     path('doFeedbackStaff', staffViews.doFeedbackStaff, name='doFeedbackStaff'),
     path('feedback-history-staff', staffViews.FeedbackHistoryStaffs, name='feedbackHistoryStaffs'),
+    path('profile-staff', staffViews.profileStaff, name='profileStaff'),
+    path('doEditProfileStaff', staffViews.doEditProfileStaff, name='doEditProfileStaff'),
+    path('check-email-exist', staffViews.checkEmailExistStaff, name='checkEmailExistStaff'), 
+    path('check-username-exist', staffViews.checkUsernameExistStaff, name='checkUsernameExistStaff'), 
 ]
