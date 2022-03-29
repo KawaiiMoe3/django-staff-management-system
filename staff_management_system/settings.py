@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'web_SMS.loginCheckMiddleWare.LoginCheckMiddleWare',
+    # 'web_SMS.loginCheckMiddleWare.LoginCheckMiddleWare',
 ]
 
 ROOT_URLCONF = 'staff_management_system.urls'

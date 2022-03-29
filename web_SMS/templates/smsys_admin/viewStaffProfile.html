@@ -1,5 +1,5 @@
 <!-- inheritance templates -- base.html -->
-{% extends 'base/base_staff.html' %}
+{% extends 'base/base.html' %}
 <!-- render static file in this html file -->
 {% load static %}
 
@@ -38,17 +38,17 @@
                 <div class="card-body box-profile">
                   <div class="text-center">
                     <img class="profile-user-img img-fluid img-circle"
-                         src="{% static 'dist/img/user4-128x128.jpg' %}"
+                         src="{{ staff.profile_pic }}"
                          alt="User profile picture">
                   </div>
   
-                  <h3 class="profile-username text-center">{{ user.username }}</h3>
+                  <h3 class="profile-username text-center">{{ staff.admin.username }}</h3>
   
                   <p class="text-muted text-center">{{ staff.position }}</p>
   
                   <ul class="list-group list-group-unbordered mb-3">
                     <li class="list-group-item">
-                        <b>Staff ID</b> <a class="float-right">{{ user.id }}</a>
+                        <b>Staff ID</b> <a class="float-right">{{ staff.admin.id }}</a>
                     </li>
                     <li class="list-group-item">
                       <b>Gender</b> <a class="float-right">{{ staff.gender }}</a>
@@ -57,7 +57,7 @@
                       <b>Tel No.</b> <a class="float-right">{{ staff.telno }}</a>
                     </li>
                     <li class="list-group-item">
-                      <b>Date Joined</b> <a class="float-right">{{ user.date_joined }}</a>
+                      <b>Date Joined</b> <a class="float-right">{{ staff.admin.date_joined }}</a>
                     </li>
                   </ul>
                 </div>
@@ -117,11 +117,11 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label>Username</label>
-                                <input id="id_username" type="text" name="username" value="{{ user.username }}" class="form-control" placeholder="Enter username" required>
+                                <input id="id_username" type="text" name="username" value="{{ staff.admin.username }}" class="form-control" placeholder="Enter username" required>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                <input id="id_email" type="email" name="email" value="{{ user.email }}" class="form-control" placeholder="Enter email" required>
+                                <input id="id_email" type="email" name="email" value="{{ staff.admin.email }}" class="form-control" placeholder="Enter email" required>
                             </div>
                             <div class="form-group">
                                 <label>New Password (Fill Only If You want to Change Password)</label>

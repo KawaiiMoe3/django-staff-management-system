@@ -41,6 +41,7 @@
         {% url 'edit_staff' staff_id=id as edit_staff %}
         {% url 'feedbackMessage' as feedbackMessage %}
         {% url 'viewStaffLeave' as viewStaffLeave %}
+        {% url 'staffProfile' as staffProfile %}
         <li 
             class="nav-item 
             {% if request.path == add_staff %} 
@@ -48,6 +49,8 @@
             {% elif request.path == list_staff %}
                 menu-open
             {% elif request.path == edit_staff %}
+                menu-open
+            {% elif request.path == staffProfile %}
                 menu-open
             {% endif %}"
         >
@@ -58,6 +61,8 @@
                 {% elif request.path == list_staff %}
                     active
                 {% elif request.path == edit_staff %}
+                    active
+                {% elif request.path == staffProfile %}
                     active
                 {% endif %}}"
             >
@@ -88,6 +93,13 @@
                     <a href="{{ add_staff }}" class="nav-link {% if request.path == add_staff %} active {% endif %}">
                     <i class="nav-icon fa-solid fa-user-plus"></i>
                     <p>Add Staff</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    {% url 'staffProfile' as staffProfile %}
+                    <a href="{{ staffProfile }}" class="nav-link {% if request.path == staffProfile %} active {% endif %}">
+                    <i class="nav-icon fa-solid fa-id-card"></i>
+                    <p>Staff Profile</p>
                     </a>
                 </li>
             </ul>

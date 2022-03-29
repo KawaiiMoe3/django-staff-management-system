@@ -102,8 +102,12 @@ def doEditProfileStaff(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         gender = request.POST.get("gender")
+        position = request.POST.get("position")
         telno = request.POST.get("telno")
         address = request.POST.get("address")
+        education = request.POST.get("education")
+        skills = request.POST.get("skills")
+        description = request.POST.get("description")
         try:
             customuser = CustomUser.objects.get(id=request.user.id)
             customuser.username = username
@@ -115,8 +119,12 @@ def doEditProfileStaff(request):
 
             staff = Staffs.objects.get(admin=customuser.id)
             staff.gender = gender
+            staff.position = position
             staff.telno = telno
             staff.address = address
+            staff.education = education
+            staff.skills = skills
+            staff.description = description
             staff.save()
             
             messages.success(request, "Profile edited successfully!")
@@ -126,27 +134,3 @@ def doEditProfileStaff(request):
             return redirect('profileStaff')
     else:
         return redirect('profileStaff')
-
-#checkEmailExist
-@csrf_exempt #Ajax request work without csrf_token
-def checkEmailExistStaff(request):
-    email = request.POST.get("email")
-    #filter email check isit any email exists
-    user_obj = CustomUser.objects.filter(email=email).exists()
-    #Checking if object is not false then return true, else false
-    if user_obj:
-        return HttpResponse(True)
-    else:
-        return HttpResponse(False)
-
-#checkUsernameExist
-@csrf_exempt #Ajax request work without csrf_token
-def checkUsernameExistStaff(request):
-    username = request.POST.get("username")
-    #filter email check isit any username exists
-    user_obj = CustomUser.objects.filter(username=username).exists()
-    #Checking if object is not false then return true, else false
-    if user_obj:
-        return HttpResponse(True)
-    else:
-        return HttpResponse(False)

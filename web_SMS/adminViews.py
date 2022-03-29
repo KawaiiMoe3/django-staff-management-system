@@ -270,3 +270,22 @@ def doEditProfileAdmin(request):
             return redirect('editProfileAdmin')
     else:
         return redirect('editProfileAdmin')
+
+#StaffProfile
+def StaffProfile(request):
+    #Get all the objects of staffs
+    staffs = Staffs.objects.all()
+    #Passing the Staffs objects to Dictionary
+    context = {
+        'staffs' : staffs
+    }
+    return render(request, 'smsys_admin/staffProfile.html', context)
+
+#ViewStaffProfile
+def ViewStaffProfile(request, staff_id):
+    staff = Staffs.objects.get(admin=staff_id)
+    #Passing the Staffs objects to Dictionary
+    context = {
+        'staff' : staff
+    }
+    return render(request, 'smsys_admin/viewStaffProfile.html', context)
