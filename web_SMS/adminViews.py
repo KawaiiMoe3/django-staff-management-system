@@ -286,6 +286,58 @@ def ViewStaffProfile(request, staff_id):
     staff = Staffs.objects.get(admin=staff_id)
     #Passing the Staffs objects to Dictionary
     context = {
-        'staff' : staff
+        'staff' : staff,
+        'id' : staff_id,
     }
     return render(request, 'smsys_admin/viewStaffProfile.html', context)
+
+#doEditProfileStaffByAdmin
+def doEditProfileStaffByAdmin(request):
+    if request.method == "POST":
+        #Get the staff ID from hidden input
+        staff_id = request.POST.get("staff_id")
+        #Check whether staff_id is exists or not
+        if staff_id == None:
+            return redirect('staffProfile')
+
+        #Get the field value from user input
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        gender = request.POST.get("gender")
+        position = request.POST.get("position")
+        telno = request.POST.get("telno")
+        address = request.POST.get("address")
+        education = request.POST.get("education")
+        skills = request.POST.get("skills")
+        description = request.POST.get("description")
+        try:
+            customuser = CustomUser.objects.get(id=staff_id)
+            customuser.username = username
+            customuser.email = email
+            #Change password if password field is not none and empty
+            if password != None and password != "":
+                customuser.set_password(password)
+            customuser.save()
+
+            staff = Staffs.objects.get(admin=staff_id)
+            staff.gender = gender
+            staff.position = position
+            staff.telno = telno
+            staff.address = address
+            staff.education = education
+            staff.skills = skills
+            staff.description = description
+            staff.save()
+            
+            messages.success(request, "Profile edited successfully!")
+            return redirect('viewStaffProfile/'+staff_id)
+        except:
+            messages.error(request, "Profile edited failure...Please try again.")
+            return redirect('viewStaffProfile/'+staff_id)
+    else:
+        return redirect('viewStaffProfile/'+staff_id)
+
+#AboutUsAdmin
+def AboutUsAdmin(request):
+    return render(request, 'smsys_admin/aboutUsAdmin.html')

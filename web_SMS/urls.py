@@ -28,10 +28,11 @@ urlpatterns = [
     path('edit-profile-admin', adminViews.editProfileAdmin, name='editProfileAdmin'),
     path('doEditProfileAdmin', adminViews.doEditProfileAdmin, name='doEditProfileAdmin'),
     path('staff-profile', adminViews.StaffProfile, name='staffProfile'),
-    path('view-staff-profile/<str:staff_id>', adminViews.ViewStaffProfile, name='viewStaffProfile'),
+    path('viewStaffProfile/<str:staff_id>', adminViews.ViewStaffProfile, name='viewStaffProfile'),
+    path('doEditProfileStaffByAdmin', adminViews.doEditProfileStaffByAdmin, name='doEditProfileStaffByAdmin'),
+    path('about-us', adminViews.AboutUsAdmin, name='aboutUsAdmin'),
     #For staffViews:
     path('index', staffViews.Index, name='index_staff'),
-    path('contact', staffViews.Contact, name='contact_staff'),
     path('apply-leave', staffViews.ApplyLeaveStaff, name='applyLeaveStaff'),
     path('doApplyLeaveStaff', staffViews.doApplyLeaveStaff, name='doApplyLeaveStaff'),
     path('leave-applied-history', staffViews.LeaveAppliedHistory, name='leaveAppliedHistory'),
@@ -40,4 +41,5 @@ urlpatterns = [
     path('feedback-history-staff', staffViews.FeedbackHistoryStaffs, name='feedbackHistoryStaffs'),
     path('profile-staff', staffViews.profileStaff, name='profileStaff'),
     path('doEditProfileStaff', staffViews.doEditProfileStaff, name='doEditProfileStaff'),
+    path('about-us-staff', staffViews.AboutUsStaff, name='aboutUsStaff'),
 ]

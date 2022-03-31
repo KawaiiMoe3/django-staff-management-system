@@ -6,15 +6,19 @@ from django.views.decorators.csrf import csrf_exempt
 
 #Page Index
 def Index(request):
-    return render(request, 'smsys_staff/index.html')
-
-#Page Contact
-def Contact(request):
-    return render(request, 'smsys_staff/contact.html')
+    staff = Staffs.objects.get(admin=request.user.id)
+    context = {
+        'staff' : staff,
+    }
+    return render(request, 'smsys_staff/index.html', context)
 
 #Page ApplyLeaveStaff
 def ApplyLeaveStaff(request):
-    return render(request, 'smsys_staff/applyLeaveStaff.html')
+    staff = Staffs.objects.get(admin=request.user.id)
+    context = {
+        'staff' : staff,
+    }
+    return render(request, 'smsys_staff/applyLeaveStaff.html', context)
 
 # doApplyLeaveStaff
 def doApplyLeaveStaff(request):
@@ -39,17 +43,22 @@ def doApplyLeaveStaff(request):
 #Page Leave Applied History
 def LeaveAppliedHistory(request):
     #Accessing the current user ID 
-    staff_obj = Staffs.objects.get(admin=request.user.id)
+    staff = Staffs.objects.get(admin=request.user.id)
     #Show the Leave Applied History that filter by curret user ID
-    leave_data = LeaveReportStaff.objects.filter(staff_id=staff_obj)
+    leave_data = LeaveReportStaff.objects.filter(staff_id=staff)
     context = {
         'leave_data' : leave_data,
+        'staff' : staff,
     }
     return render(request, 'smsys_staff/leaveAppliedHistory.html', context)
 
 #FeedbackStaff
 def FeedbackStaff(request):
-    return render(request, 'smsys_staff/feedbackStaff.html')
+    staff = Staffs.objects.get(admin=request.user.id)
+    context = {
+        'staff' : staff,
+    }
+    return render(request, 'smsys_staff/feedbackStaff.html', context)
 
 # doApplyLeaveStaff
 def doFeedbackStaff(request):
@@ -74,11 +83,12 @@ def doFeedbackStaff(request):
 #FeedbackHistoryStaff
 def FeedbackHistoryStaffs(request):
     #Accessing the current user ID 
-    staff_id = Staffs.objects.get(admin=request.user.id)
+    staff = Staffs.objects.get(admin=request.user.id)
     #Show the Feedback History Staffs that filter by curret user ID
-    feedback_data = FeedBackStaffs.objects.filter(staff_id=staff_id)
+    feedback_data = FeedBackStaffs.objects.filter(staff_id=staff)
     context = {
         'feedback_data' : feedback_data,
+        'staff' : staff,
     }
     return render(request, 'smsys_staff/feedbackHistoryStaff.html', context)
 
@@ -94,7 +104,7 @@ def profileStaff(request):
     }
     return render(request, 'smsys_staff/profile_staff.html', context)
 
-#doEditProfileAdmin
+#doEditProfileStaff
 def doEditProfileStaff(request):
     if request.method == "POST":
         #Get the field value from user input
@@ -134,3 +144,11 @@ def doEditProfileStaff(request):
             return redirect('profileStaff')
     else:
         return redirect('profileStaff')
+
+#AboutUsStaff
+def AboutUsStaff(request):
+    staff = Staffs.objects.get(admin=request.user.id)
+    context = {
+        'staff' : staff,
+    }
+    return render(request, 'smsys_staff/aboutUsStaff.html', context)
