@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from web_SMS.models import LeaveReportStaff, Staffs, FeedBackStaffs, CustomUser
+from web_SMS.models import Attendance, AttendanceReport, LeaveReportStaff, Staffs, FeedBackStaffs, CustomUser
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 
 #Page Index
 def Index(request):
@@ -152,3 +153,73 @@ def AboutUsStaff(request):
         'staff' : staff,
     }
     return render(request, 'smsys_staff/aboutUsStaff.html', context)
+
+#TakeAttendanceStaff
+def TakeAttendanceStaff(request):
+    staff = Staffs.objects.get(admin=request.user.id)
+    #Get current time
+    now = datetime.now()
+    #Change the time format
+    timeFormat = now.strftime("%d/%m/%Y %H:%M:%S")
+    #Create a dictionary
+    context = {
+        #For Timing
+        'year' : now.year,
+        'month' : now.month,
+        'day' : now.day,
+        'hour' : now.hour,
+        'min' : now.minute,
+        'sec' : now.second,
+        'staff' : staff,
+    }
+    return render(request, 'smsys_staff/takeAttendanceStaff.html', context)
+
+#doClockInStaff
+def doClockInStaff(request):
+    if request.method == "POST":
+        #Get the attendance date from user input
+        attendance_date = request.POST.get("attendance_date")
+        #Accessing the current user ID 
+        staff_id = Staffs.objects.get(admin=request.user.id)
+        try:
+            #Passing the value from Attendance model
+            attendance_staff = Attendance(staff_id=staff_id, attendance_date=attendance_date)
+            attendance_staff.attendance_date = attendance_date
+            attendance_staff.save()
+            
+            """
+            status 1 : clock in
+            status 2 : clock out / Clock in and out is complete
+            """
+            #Get attendance_id from Attendance model
+            attendance_id = Attendance.objects.get(id=attendance_staff.id)
+            attendance_report = AttendanceReport(attendance_id=attendance_id, status="1", staff_id=staff_id)
+            attendance_report.save()
+            messages.success(request, "Clock in successfully!")
+            return redirect('takeAttendanceStaff')
+        except:
+            messages.error(request, "Somethings error...Please try again.")
+            return redirect('takeAttendanceStaff')
+    else:
+        return redirect('takeAttendanceStaff')
+
+#AttendanceRecordStaff
+def AttendanceRecordStaff(request):
+    staff = Staffs.objects.get(admin=request.user.id)
+    #Show the AttendanceReport that filter by curret user ID
+    attendance_data = AttendanceReport.objects.filter(staff_id=staff)
+    context = {
+        'staff' : staff,
+        'attendance_data' : attendance_data,
+    }
+    return render(request, 'smsys_staff/attendanceRecord.html', context)
+
+#doClockOutStaff
+def doClockOutStaff(request, attendance_id):
+    #Get the attendance data by ID from AttendanceReport model's objects
+    attendance_report = AttendanceReport.objects.get(id=attendance_id)
+    #Change the status to Clocked Out (2) and update clock out timing
+    attendance_report.status = 2
+    attendance_report.updated_at = datetime.now()
+    attendance_report.save()
+    return redirect('attendanceRecordStaff')

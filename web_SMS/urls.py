@@ -42,4 +42,8 @@ urlpatterns = [
     path('profile-staff', staffViews.profileStaff, name='profileStaff'),
     path('doEditProfileStaff', staffViews.doEditProfileStaff, name='doEditProfileStaff'),
     path('about-us-staff', staffViews.AboutUsStaff, name='aboutUsStaff'),
+    path('take-attendance-staff', staffViews.TakeAttendanceStaff, name='takeAttendanceStaff'),
+    path('doClockInStaff', staffViews.doClockInStaff, name='doClockInStaff'),
+    path('doClockOutStaff/<str:attendance_id>', staffViews.doClockOutStaff, name='doClockOutStaff'),
+    path('attendance-record-staff', staffViews.AttendanceRecordStaff, name='attendanceRecordStaff'),
 ]

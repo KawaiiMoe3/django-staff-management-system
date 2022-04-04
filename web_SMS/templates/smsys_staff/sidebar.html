@@ -40,6 +40,47 @@
         {% url 'leaveAppliedHistory' as leaveAppliedHistory %}
         {% url 'feedbackStaff' as feedbackStaff %}
         {% url 'feedbackHistoryStaffs' as feedbackHistoryStaffs %}
+        {% url 'takeAttendanceStaff' as takeAttendanceStaff %}
+        {% url 'attendanceRecordStaff' as attendanceRecordStaff %}
+        <li 
+            class="nav-item 
+            {% if request.path == takeAttendanceStaff %} 
+                menu-open
+            {% elif request.path == attendanceRecordStaff %} 
+                menu-open
+            {% endif %}"
+        >
+            <a href="#" 
+                class="nav-link 
+                {% if request.path == takeAttendanceStaff %} 
+                    active
+                {% elif request.path == attendanceRecordStaff %} 
+                    active
+                {% endif %}"
+            >
+            <i class="nav-icon fa-solid fa-id-badge"></i>
+            <p>
+                Attendance
+                <i class="fas fa-angle-left right"></i>
+            </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    {% url 'takeAttendanceStaff' as takeAttendanceStaff %}
+                    {% url 'attendanceRecordStaff' as attendanceRecordStaff %}
+                    <a href="{{ takeAttendanceStaff }}" class="nav-link {% if request.path == takeAttendanceStaff %} active {% endif %}"
+                    >
+                    <i class="nav-icon fa-solid fa-square-check"></i>
+                    <p>Take Attendance</p>
+                    </a>
+                    <a href="{{ attendanceRecordStaff }}" class="nav-link {% if request.path == attendanceRecordStaff %} active {% endif %}"
+                    >
+                    <i class="nav-icon fa-solid fa-image-portrait"></i>
+                    <p>Attendance Record</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li 
             class="nav-item 
             {% if request.path == applyLeaveStaff %} 
@@ -120,7 +161,6 @@
                 </li>
             </ul>
         </li>
-        
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

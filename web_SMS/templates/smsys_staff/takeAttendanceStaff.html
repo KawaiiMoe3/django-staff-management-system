@@ -1,0 +1,115 @@
+<!-- inheritance templates -- base.html -->
+{% extends 'base/base_staff.html' %}
+<!-- render static file in this html file -->
+{% load static %}
+
+{% block title %}Attendance{% endblock %}
+    
+    {% block content_title %}Take Attendance{% endblock %}
+
+    {% block content_body %}
+        <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                {% if messages %}
+                    {% for msg in messages %}
+                        {% if msg.tags == 'error' %}
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="text-bold">{{ msg }}</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="text-bold text-center">{{ msg }}</span>
+                                <button type="button" class="close text-white" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+              <!-- general form elements -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Clock in at <span id="current_time" class="text-bold"></span> <span id="showTimeZone"></span></h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form action="{% url 'doClockInStaff' %}" method="post">
+                  {% csrf_token %}
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label>Attendance Date</label>
+                      <input type="date" name="attendance_date" class="form-control" placeholder="Enter date">
+                    </div>
+                    <div class="form-group">
+                      <label>Clock In At</label>
+                      <input type="text" id="attendance_at" class="form-control" placeholder="Enter date" disabled>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+  
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-block">Clock In</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card -->
+            </div>
+            <!--/.col (right) -->
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    {% endblock %}
+
+    {% block site_js %}
+        <script type="text/javascript">
+            //Create Date()
+            let nowTime = new Date()
+            //Get timeZone UTC-8
+            let timeZone = (0 - new Date().getTimezoneOffset() / 60)
+            //Passing timeZone to showTimeZone variable
+            let showTimeZone = timeZone
+            //Get the span ID and show the timeZone
+            document.getElementById("showTimeZone").innerText = "(UTC+" + showTimeZone + ")"
+            
+            //Get the following date and timing
+            yy = {{ year }}
+            mo = {{ month }}
+            dd = {{ day }}
+            hh = {{ hour }}
+            mm = {{ min }}
+            ss = {{ sec }}
+
+            //Fixed the month,day,hour,min,sec to 2 digits
+            function fix(num, length){
+                return(''+ num).length < length ? ((new Array(length)).join('0') + num).slice(-length) : '' + num
+            }
+
+            //Create a timer
+            setInterval(function(){
+                //Show the current time
+                document.getElementById("current_time").innerText = fix(dd,2) + "/" + fix(mo,2) + "/" + yy + "  " + fix(hh,2) + ":" + fix(mm,2) + ":" + fix(ss,2)
+                document.getElementById("attendance_at").value = fix(hh,2) + ":" + fix(mm,2) + ":" + fix(ss,2)
+                ss++
+                if(ss == 60){
+                    ss = 0
+                    mm++
+                    if(mm == 60){
+                        mm = 0
+                        hh++
+                        if(hh == 24){
+                            hh == 0
+                        }
+                    }
+                }
+            },1000) //Call this function each second
+        </script>
+    {% endblock %}
