@@ -17,6 +17,42 @@
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
+
+              <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Fetch Attendance Record </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="" method="post">
+                      {% csrf_token %}
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label>Start Date</label>
+                          <input type="date" name="startDate" class="form-control" placeholder="Enter date" required>
+                        </div>
+                        <div class="form-group">
+                          <label>End Date</label>
+                          <input type="date" name="endDate" class="form-control" placeholder="Enter date" required>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+      
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-block">Fetch Attendance Record</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <!--/.col (right) -->
+              </div>
+              <!-- /.row -->
+
               <div class="row">
                 <div class="col-12">
                   <div class="card">
@@ -28,8 +64,8 @@
                       <table id="example1" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th>#.</th>
                                 <th>Attendance ID</th>
+                                <th>Attendance Date</th>
                                 <th>Clock In</th>
                                 <th>Clock Out</th>
                                 <th>Status</th>
@@ -39,11 +75,11 @@
                             {% for data in attendance_data %}
                             <tr>
                                 <td>{{ data.id }}</td>
-                                <td>{{ data.attendance_id.id }}</td>
+                                <td><span class="text-bold text-primary">{{ data.attendance_date }}</span></td>
                                 <td>Clocked on <span class="text-bold text-success">{{ data.created_at }}</span></td>
                                 <td>
                                     {% if data.status == 1 %}
-                                        <span class="text-danger">You haven't clocked out</span>,   
+                                        <span class="text-danger">You haven't clocked out</span>,<br>   
                                         <a href="{% url 'doClockOutStaff' attendance_id=data.id %}" class="btn-sm btn-primary">Clock Out</a>
                                     {% elif data.status == 2 %}
                                         Clocked on <span class="text-bold text-success">{{ data.updated_at }}</span>
@@ -67,8 +103,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>#.</th>
                                 <th>Attendance ID</th>
+                                <th>Attendance Date</th>
                                 <th>Clock In</th>
                                 <th>Clock Out</th>
                                 <th>Status</th>

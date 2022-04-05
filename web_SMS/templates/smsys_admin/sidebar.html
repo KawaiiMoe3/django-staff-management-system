@@ -43,6 +43,7 @@
         {% url 'viewStaffLeave' as viewStaffLeave %}
         {% url 'staffProfile' as staffProfile %}
         {% url 'viewStaffProfile' staff_id=id as viewStaffProfile %}
+        {% url 'attendanceRecord' as attendanceRecord %}
         <li 
             class="nav-item 
             {% if request.path == add_staff %} 
@@ -170,6 +171,35 @@
                     >
                     <i class="nav-icon fa-solid fa-users-gear"></i>
                     <p>Staff Leave</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li 
+            class="nav-item 
+            {% if request.path == attendanceRecord %} 
+                menu-open
+            {% endif %}"
+        >
+            <a href="#" 
+                class="nav-link 
+                {% if request.path == attendanceRecord %} 
+                    active
+                {% endif %}"
+            >
+            <i class="nav-icon fa-solid fa-id-badge"></i>
+            <p>
+                Attendance Staff
+                <i class="fas fa-angle-left right"></i>
+            </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    {% url 'attendanceRecord' as attendanceRecord %}
+                    <a href="{{ attendanceRecord }}" class="nav-link {% if request.path == attendanceRecord %} active {% endif %}"
+                    >
+                    <i class="nav-icon fa-solid fa-image-portrait"></i>
+                    <p>Attendance Record</p>
                     </a>
                 </li>
             </ul>

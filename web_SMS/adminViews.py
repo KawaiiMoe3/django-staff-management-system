@@ -4,7 +4,7 @@ from datetime import datetime
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from web_SMS.form import AddStaffForm, EditStaffForm
-from web_SMS.models import CustomUser, LeaveReportStaff, Staffs, FeedBackStaffs
+from web_SMS.models import CustomUser, LeaveReportStaff, Staffs, FeedBackStaffs, AttendanceReport
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_exempt
 
@@ -341,3 +341,29 @@ def doEditProfileStaffByAdmin(request):
 #AboutUsAdmin
 def AboutUsAdmin(request):
     return render(request, 'smsys_admin/aboutUsAdmin.html')
+
+#AttendanceRecord
+def AttendanceRecord(request):
+    #Show the specify attendance data by start and end date if fetch button pressed, else show all the attendance data
+    if request.method == "POST":
+        #Get Start and End date from user's input
+        startDate = request.POST.get('startDate')
+        endDate = request.POST.get('endDate')
+
+        #Fetch attendance report data using raw('SQL statement') from AttendanceReport model
+        fetchData = AttendanceReport.objects.raw('SELECT * FROM web_sms_attendancereport WHERE attendance_date BETWEEN "'+startDate+'" AND "'+endDate+'"')
+        
+        #Create a dictionary
+        context = {
+            'attendance_report' : fetchData,
+        }
+        return render(request, 'smsys_admin/attendanceRecord.html', context)
+    else:
+        #Get the following data from models respectively
+        attendance_report = AttendanceReport.objects.all()
+
+        #Create a dictionary
+        context = {
+            'attendance_report' : attendance_report,
+        }
+        return render(request, 'smsys_admin/attendanceRecord.html', context)

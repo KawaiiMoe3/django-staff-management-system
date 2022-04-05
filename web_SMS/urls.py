@@ -31,6 +31,7 @@ urlpatterns = [
     path('viewStaffProfile/<str:staff_id>', adminViews.ViewStaffProfile, name='viewStaffProfile'),
     path('doEditProfileStaffByAdmin', adminViews.doEditProfileStaffByAdmin, name='doEditProfileStaffByAdmin'),
     path('about-us', adminViews.AboutUsAdmin, name='aboutUsAdmin'),
+    path('attendance-record', adminViews.AttendanceRecord, name='attendanceRecord'),
     #For staffViews:
     path('index', staffViews.Index, name='index_staff'),
     path('apply-leave', staffViews.ApplyLeaveStaff, name='applyLeaveStaff'),

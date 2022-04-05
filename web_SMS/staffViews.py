@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from web_SMS.models import Attendance, AttendanceReport, LeaveReportStaff, Staffs, FeedBackStaffs, CustomUser
+from web_SMS.models import LeaveReportStaff, Staffs, FeedBackStaffs, CustomUser, AttendanceReport
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
@@ -182,18 +182,8 @@ def doClockInStaff(request):
         #Accessing the current user ID 
         staff_id = Staffs.objects.get(admin=request.user.id)
         try:
-            #Passing the value from Attendance model
-            attendance_staff = Attendance(staff_id=staff_id, attendance_date=attendance_date)
-            attendance_staff.attendance_date = attendance_date
-            attendance_staff.save()
-            
-            """
-            status 1 : clock in
-            status 2 : clock out / Clock in and out is complete
-            """
-            #Get attendance_id from Attendance model
-            attendance_id = Attendance.objects.get(id=attendance_staff.id)
-            attendance_report = AttendanceReport(attendance_id=attendance_id, status="1", staff_id=staff_id)
+            #Passing the value to AttendanceReport model
+            attendance_report = AttendanceReport(attendance_date=attendance_date,status="1", staff_id=staff_id)
             attendance_report.save()
             messages.success(request, "Clock in successfully!")
             return redirect('takeAttendanceStaff')
@@ -208,11 +198,28 @@ def AttendanceRecordStaff(request):
     staff = Staffs.objects.get(admin=request.user.id)
     #Show the AttendanceReport that filter by curret user ID
     attendance_data = AttendanceReport.objects.filter(staff_id=staff)
-    context = {
-        'staff' : staff,
-        'attendance_data' : attendance_data,
-    }
-    return render(request, 'smsys_staff/attendanceRecord.html', context)
+
+    #Show the specify attendance data by start and end date if fetch button pressed, else show all the attendance data
+    if request.method == "POST":
+        #Get Start and End date from user's input
+        startDate = request.POST.get('startDate')
+        endDate = request.POST.get('endDate')
+
+        #Fetch attendance report data using raw('SQL statement') from AttendanceReport model that filter by staff ID
+        fetchData = AttendanceReport.objects.filter(staff_id=staff).raw('SELECT * FROM web_sms_attendancereport WHERE attendance_date BETWEEN "'+startDate+'" AND "'+endDate+'"')
+        
+        #Create a dictionary
+        context = {
+            'staff' : staff,
+            'attendance_data' : fetchData,
+        }
+        return render(request, 'smsys_staff/attendanceRecord.html', context)
+    else:
+        context = {
+            'staff' : staff,
+            'attendance_data' : attendance_data,
+        }
+        return render(request, 'smsys_staff/attendanceRecord.html', context)
 
 #doClockOutStaff
 def doClockOutStaff(request, attendance_id):
