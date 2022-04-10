@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from web_SMS.models import LeaveReportStaff, Staffs, FeedBackStaffs, CustomUser, AttendanceReport
+from web_SMS.models import *
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 
@@ -230,3 +230,57 @@ def doClockOutStaff(request, attendance_id):
     attendance_report.updated_at = datetime.now()
     attendance_report.save()
     return redirect('attendanceRecordStaff')
+
+#Todo
+def TodoList(request):
+    #Get the current staff ID
+    staff = Staffs.objects.get(admin=request.user.id)
+    #Filter task by staff ID
+    tasks = TodoTask.objects.filter(staff_id=staff)
+    #Count all the incomplete tasks 
+    incompleteTaskCount = TodoTask.objects.filter(staff_id=staff, complete=False).count()
+
+    #Create a dictionary
+    context = {
+        'staff' : staff,
+        'tasks' : tasks,
+        'incompleteTaskCount' : incompleteTaskCount,
+    }
+    return render(request, 'smsys_staff/todoList.html', context)
+
+#doAddTask
+def doAddTask(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        complete = request.POST.get("complete")
+
+        #Accessing the current user ID 
+        staff_id = Staffs.objects.get(admin=request.user.id)
+        
+        try:
+            #Check whether complete checkbox is checked or not
+            if complete == "True":
+                completeIsChecked = complete
+            else:
+                completeIsChecked = False
+            #Passing the value from TodoTask model
+            todoTask = TodoTask(staff_id=staff_id, title=title, description=description, complete=completeIsChecked)
+            todoTask.save()
+            return redirect('todoList')
+        except:
+            return redirect('todoList')
+    else:
+        return redirect('todoList')
+
+#doEditTask
+def doEditTask(request, task_id):
+    pass
+
+#doDeleteTask
+def doDeleteTask(request, task_id):
+    #Get the task ID from TodoTask models
+    task = TodoTask.objects.get(id=task_id)
+    #Delete the following task
+    task.delete()
+    return redirect('todoList')

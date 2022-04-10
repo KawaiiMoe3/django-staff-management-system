@@ -70,6 +70,17 @@ class FeedBackStaffs(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
     objects = models.Manager()
 
+#Create todoList model
+class TodoTask(models.Model):
+    id = models.AutoField(primary_key=True)
+    staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    complete = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+    objects = models.Manager()
+
 #This method will run only when data added in CustomUser
 @receiver(post_save, sender=CustomUser)
 def create_user_profile(sender, instance, created, **kwargs):
