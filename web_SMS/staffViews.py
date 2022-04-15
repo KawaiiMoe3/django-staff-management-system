@@ -274,8 +274,44 @@ def doAddTask(request):
         return redirect('todoList')
 
 #doEditTask
+def TodoListEdit(request, task_id):
+    #Get the current logged user and the task ID
+    staff = Staffs.objects.get(admin=request.user.id)
+    task = TodoTask.objects.get(id=task_id)
+
+    #Create a dictionary
+    context = {
+        'staff' : staff,
+        'task' : task,
+    }
+    return render(request, 'smsys_staff/todoListEdit.html', context)
+
+#doEditTask
 def doEditTask(request, task_id):
-    pass
+    #Get the current task ID
+    task = TodoTask.objects.get(id=task_id)
+
+    if request.method == "POST":
+        #Get the following value
+        title = request.POST.get("title")
+        description = request.POST.get("description")
+        complete = request.POST.get("complete")
+
+        try:
+            #Check whether complete checkbox is checked or not
+            if complete == "True":
+                completeIsChecked = complete
+            else:
+                completeIsChecked = False
+            task.title = title
+            task.description = description
+            task.complete = completeIsChecked
+            task.save()
+            return redirect('todoList')
+        except:
+            return redirect('todoList')
+    else:
+        return redirect('todoList')
 
 #doDeleteTask
 def doDeleteTask(request, task_id):

@@ -89,11 +89,11 @@
                                     {% endif %}
                                     <td>
                                         <div class="col-sm-10">
-                                            <a href="{% url 'doEditTask' task_id=task.id %}" class="btn-sm btn-primary">
+                                            <a href="{% url 'todoListEdit' task_id=task.id %}" class="btn-sm btn-primary">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                                 Edit
                                             </a> &nbsp;&nbsp;
-                                            <a href="{% url 'doDeleteTask' task_id=task.id %}" class="btn-sm btn-danger">
+                                            <a href="{% url 'doDeleteTask' task_id=task.id %}" class="btn-sm btn-danger confirm-delete">
                                                 <i class="fa-solid fa-trash-can"></i>
                                                 Delete
                                             </a>
@@ -157,5 +157,12 @@
             "responsive": true,
           });
         });
+    </script>
+
+    <script>
+        //Get delete button and binding an onclick event
+        $(document).on('click', '.confirm-delete', function(){
+            return confirm("Are you sure to delete this task?")
+        })
     </script>
     {% endblock %}

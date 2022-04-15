@@ -1,0 +1,56 @@
+<!-- inheritance templates -- base.html -->
+{% extends 'base/base_staff.html' %}
+<!-- render static file in this html file -->
+{% load static %}
+
+{% block title %}Todo List{% endblock %}
+
+    {% block content_title %}
+        Edit Task | ID: <span class="text-bold text-primary">{{ task.id }}</span>
+    {% endblock %}
+
+    {% block content_body %}
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+
+              <div class="row">
+                <!-- left column -->
+                <div class="col-md-12">
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Edit Task</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="{% url 'doEditTask' task_id=task.id %}" method="post">
+                      {% csrf_token %}
+                      <div class="card-body">
+                        <label>Title:</label>
+                        <input type="text" name="title" value="{{ task.title }}" class="form-control" required><br>
+                        <label>Description (Optional):</label>
+                        <textarea name="description" class="form-control" cols="10" rows="5">{{ task.description }}</textarea>
+                        <br>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="complete" value="True" {% if task.complete == 1 %}checked{% endif %} class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Complete (Optional)</label>
+                        </div>
+                      </div>
+                      <!-- /.card-body -->
+      
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-block">Save Change</button>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.card -->
+                </div>
+                <!--/.col (right) -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+          </section>
+          <!-- /.content -->
+    {% endblock %}

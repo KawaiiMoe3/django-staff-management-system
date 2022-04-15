@@ -49,6 +49,7 @@ urlpatterns = [
     path('attendance-record-staff', staffViews.AttendanceRecordStaff, name='attendanceRecordStaff'),
     path('todo-list', staffViews.TodoList, name='todoList'),
     path('doAddTask', staffViews.doAddTask, name='doAddTask'),
+    path('todoListEdit/<str:task_id>', staffViews.TodoListEdit, name='todoListEdit'),
     path('doEditTask/<str:task_id>', staffViews.doEditTask, name='doEditTask'),
     path('doDeleteTask/<str:task_id>', staffViews.doDeleteTask, name='doDeleteTask'),
 ]
