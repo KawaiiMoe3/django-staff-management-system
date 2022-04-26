@@ -17,6 +17,8 @@ urlpatterns = [
     path('list_staff', adminViews.listStaff, name='list_staff'),
     path('edit_staff/<str:staff_id>', adminViews.editStaff, name='edit_staff'),
     path('doEditStaff', adminViews.doEditStaff, name='doEditStaff'),
+    path('doDeleteStaff/<str:staff_id>', adminViews.doDeleteStaff, name='doDeleteStaff'),
+    path('doDeleteStaffByChecked/', adminViews.doDeleteStaffByChecked, name='doDeleteStaffByChecked'),
     path('contact/', adminViews.Contact, name='contact'), 
     path('check-email-exist', adminViews.checkEmailExist, name='checkEmailExist'), 
     path('check-username-exist', adminViews.checkUsernameExist, name='checkUsernameExist'), 
@@ -52,4 +54,5 @@ urlpatterns = [
     path('todoListEdit/<str:task_id>', staffViews.TodoListEdit, name='todoListEdit'),
     path('doEditTask/<str:task_id>', staffViews.doEditTask, name='doEditTask'),
     path('doDeleteTask/<str:task_id>', staffViews.doDeleteTask, name='doDeleteTask'),
+    path('doDeleteTaskByCheck/', staffViews.doDeleteTaskByCheck, name='doDeleteTaskByCheck'),
 ]

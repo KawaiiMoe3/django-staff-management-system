@@ -248,6 +248,18 @@ def TodoList(request):
     }
     return render(request, 'smsys_staff/todoList.html', context)
 
+#doDeleteTaskByCheck
+def doDeleteTaskByCheck(request):
+    #Get the current staff ID
+    staff = Staffs.objects.get(admin=request.user.id)
+
+    if request.method == "POST":
+        task_ids = request.POST.getlist('id[]')
+        for id in task_ids:
+            tasks = TodoTask.objects.filter(staff_id=staff).get(id=id)
+            tasks.delete()
+        return redirect('todoList')
+
 #doAddTask
 def doAddTask(request):
     if request.method == "POST":

@@ -71,11 +71,13 @@
                                 <th>Description</th>
                                 <th>Completed</th>
                                 <th>Actions</th>
+                                <th>#.</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% csrf_token %}
                             {% for task in tasks %}
-                                <tr>
+                                <tr id="{{ task.id }}">
                                     {% if task.complete == False %}
                                         <td>{{ task.id }}</td>
                                         <td>{{ task.title }}</td>
@@ -99,6 +101,9 @@
                                             </a>
                                         </div>
                                     </td>
+                                    <td>
+                                        <input type="checkbox" name="task_id[]" value="{{ task.id }}" id="checked" style="cursor: pointer;">
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -109,9 +114,14 @@
                                 <th>Description</th>
                                 <th>Completed</th>
                                 <th>Actions</th>
+                                <th>#.</th>
                             </tr>
                         </tfoot>
                       </table>
+                      <button type="submit" id="deleteBtnByCheck" class="mt-2 float-right btn-sm btn-danger" title="Delete which task is checked">
+                        <i class="fa-solid fa-trash-can"></i>  
+                        Delete
+                      </button>
                     </div>
                     <!-- /.card-body -->
                   </div>
@@ -160,9 +170,54 @@
     </script>
 
     <script>
-        //Get delete button and binding an onclick event
-        $(document).on('click', '.confirm-delete', function(){
-            return confirm("Are you sure to delete this task?")
+        $(document).ready(function(){
+            //Get delete button and binding an onclick event
+            $(document).on('click', '.confirm-delete', function(){
+                return confirm("Are you sure to delete this task?")
+            })
+
+            //Get the deleteBtnByCheck button and binding an onclick event
+            $('#deleteBtnByCheck').click(function(){
+                if(confirm("Are you sure to delete the selected tasks?")){
+                    //Get an empty id array and csrf_token
+                    let id = []
+                    let csrf_token = $('input[name=csrfmiddlewaretoken]').val()
+
+                    //Push the id in id array if checkbox was checked
+                    $(':checkbox:checked').each(function(taskID){
+                        id[taskID] = $(this).val()
+                    })
+                    //Check whether checkbox was checked or not
+                    if(id.length === 0){
+                        //Not checked at all
+                        alert("Please select which tasks you want to delete.")
+                    }
+                    else{
+                        //Checked
+                        // console.log(id) //Testing to get task id
+
+                        //Using ajax to request for delete the tasks
+                        $.ajax({
+                            url : '{% url 'doDeleteTaskByCheck' %}',
+                            method : "POST",
+                            data : {
+                                id,
+                                csrfmiddlewaretoken : csrf_token,
+                            },
+                            //Delete success
+                            success : function(response){
+                                for(let i = 0; i < id.length; i++){
+                                    $('tr#' + id[i] + '').css('background-color', '#ccc')
+                                    $('tr#' + id[i] + '').fadeOut('slow')
+                                }
+                            }
+                        })
+                    }
+                }
+            })
         })
+        
+
+
     </script>
     {% endblock %}

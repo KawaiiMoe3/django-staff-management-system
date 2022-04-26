@@ -156,6 +156,30 @@ def doEditStaff(request):
     else:
         return HttpResponse("Method not allowed!")
 
+#doDeleteStaff
+def doDeleteStaff(request, staff_id):
+    #Get the staff_id from CustomUser and Staffs models
+    customStaff = CustomUser.objects.get(id=staff_id)
+    staff = Staffs.objects.get(admin=staff_id)
+
+    #Delete selected staff
+    customStaff.delete()
+    staff.delete()
+    return redirect('list_staff')
+
+#doDeleteStaffByChecked
+def doDeleteStaffByChecked(request):
+    if request.method == "POST":
+        staff_ids = request.POST.getlist('id[]')
+        for id in staff_ids:
+            customStaff = CustomUser.objects.get(id=id)
+            staff = Staffs.objects.get(admin=id)
+
+            #Delete selected staff
+            customStaff.delete()
+            staff.delete()
+        return redirect('list_staff')
+
 #Page Contact
 def Contact(request):
     return render(request, 'smsys_admin/contact.html')
