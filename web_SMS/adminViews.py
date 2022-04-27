@@ -1,4 +1,6 @@
 #create adminViews
+import json
+import requests
 from django.http import HttpResponse
 from datetime import datetime
 from django.shortcuts import redirect, render
@@ -275,6 +277,37 @@ def editProfileAdmin(request):
 #doEditProfileAdmin
 def doEditProfileAdmin(request):
     if request.method == "POST":
+        #Get captcha token
+        captcha_token = request.POST.get("g-recaptcha-response")
+        #Using google API to check captcha token is valid or not
+        captcha_url = "https://www.google.com/recaptcha/api/siteverify" 
+        #Get captcha secret key
+        captcha_secret_ket = "6LeLw6QfAAAAAHsDrDt4jFVEkVVuIrsxv2Vkweho"
+        #Create a dictionary to store secret key and token
+        captcha_data = {
+            "secret" : captcha_secret_ket,
+            "response" : captcha_token,
+        }
+        #Request to Google Captcha Server and passing captcha secret key
+        captcha_server_response = requests.post(url=captcha_url, data=captcha_data)
+        #print(captcha_server_response.text) print result of captcha's response
+        """
+        The result of captcha's response is a JSON object:
+
+        {
+            "success": true|false,
+            "challenge_ts": timestamp,  // timestamp of the challenge load (ISO format yyyy-MM-dd'T'HH:mm:ssZZ)
+            "hostname": string,         // the hostname of the site where the reCAPTCHA was solved
+            "error-codes": [...]        // optional
+        }
+        """
+        #Parse the JSON data by using json.loads() and passing response text 
+        captcha_json = json.loads(captcha_server_response.text)
+        #Check response of success is False, then redirect user back to profileStaff
+        if captcha_json['success'] == False:
+            messages.error(request, "Please tick(✔️) the reCaptcha Verification and try again.")
+            return redirect('editProfileAdmin')
+
         #Get the field value from user input
         username = request.POST.get("username")
         email = request.POST.get("email")

@@ -17,7 +17,7 @@
       <form action="{% url 'doLogin' %}" method="POST">
         {% csrf_token %}
         <div class="input-group mb-3">
-          <input type="text" name="username" class="form-control" placeholder="Username" required>
+          <input type="text" name="username" value="{{ username }}" class="form-control" placeholder="Username" required>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -49,6 +49,17 @@
         </div>
         <div class="row">
           <div class="col-8">
+            <div class="icheck-primary">
+              <!-- Checked the checkbox if cookie exists -->
+              <input type="checkbox" id="remember" name="remember" value="True"
+              {% if username %}
+                checked
+              {% endif %}
+              >
+              <label for="remember">
+                Remember Me
+              </label>
+            </div>
           </div>
           <!-- /.col -->
           <div class="col-4">
@@ -58,7 +69,7 @@
         </div>
       </form>
       
-      <p class="mb-1">
+      <p class="mb-1 mt-2">
         <a href="{% url 'password_reset' %}">I forgot my password</a>
       </p>
     </div>
