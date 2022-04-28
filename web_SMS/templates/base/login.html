@@ -12,7 +12,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free-6.1.1-web/css/all.min.css' %}">
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
     <!-- Theme style -->
@@ -23,6 +23,12 @@
           background-image: url("{% static 'images/wallpaper_login.jpg' %}");
           background-repeat: no-repeat;
           background-position: center;
+        }
+        
+        .icon-eye{
+            z-index: 9999;
+            margin: 7px 5px 0 -25px;
+            cursor: pointer;
         }
     </style>
     {% block site_css %}{% endblock %}
@@ -37,5 +43,30 @@
     <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
     <!-- reCaptcha -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Password visibility eyeBtn -->
+    <script>
+        //Get eyeBtn
+        let eyeBtn = document.getElementById("eyeBtn")
+        //Binding an onclick eventlistener
+        eyeBtn.addEventListener('click', toggleVisibility)
+
+        function toggleVisibility(){
+            //Get password and icon
+            let password = document.getElementById("password")
+            let icon = document.getElementById("icon")
+
+            //Change the input type and icon class
+            if(password.type === "password"){
+                password.type = "text"
+                icon.className = "fa-solid fa-eye"
+                icon.title = "Hidden Password"
+            }
+            else{
+                password.type = "password"
+                icon.className = "fa-solid fa-eye-slash"
+                icon.title = "Show Password"
+            }
+        }
+    </script>
 
 </html>

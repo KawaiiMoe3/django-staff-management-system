@@ -35,9 +35,9 @@ def doLogin(request):
             login(request, user)
             #If "remember me" was checked, store their cookie for 3days period
             if remember == "True":
-                #Set cookie username and will expire in 3 days
-                responseAdmin.set_cookie('username', username, max_age=3*24*3600)
-                responseStaff.set_cookie('username', username, max_age=3*24*3600)
+                #Set cookie username and will expire in 7 days
+                responseAdmin.set_cookie('username', username, max_age=7*24*3600)
+                responseStaff.set_cookie('username', username, max_age=7*24*3600)
                 # print(request.COOKIES.get('username')) print to ensure isit get cookie or not
             #Check user_type
             if user.user_type == "1":
