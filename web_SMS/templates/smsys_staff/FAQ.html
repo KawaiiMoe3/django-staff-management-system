@@ -1,0 +1,280 @@
+<!-- inheritance templates -- base.html -->
+{% extends 'base/base_staff.html' %}
+<!-- render static file in this html file -->
+{% load static %}
+
+    {% block title %}FAQ{% endblock %}
+
+    {% block content_title %}Frequently Asked Questions | SMSys{% endblock %}
+    {% block site_css %}
+        <!-- Collapse -->
+        <link rel="stylesheet" href="{% static 'css/collapse.css' %}">
+        <style>
+          .thanks{
+            display: none;
+          }
+
+          .sorry{
+            display: none;
+          }
+
+          /* #thanks:target{
+            display: block;
+          }
+          
+          #sorry:target{
+            display: block;
+          } */
+        </style>
+    {% endblock %}
+
+    {% block content_body %}
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-6" id="accordion">
+                    <div class="accordion" id="accordionExample">
+
+                        <div class="card">
+                          <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                1. What is SMSys?
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <p>
+                                    <b>Staff Management System (SMSys)</b> which could helps your staff to give their best efforts everyday to 
+                                    achieve the goals for organization. It guides and manages staff efforts 
+                                    in the right direction. It also securely stores and manages personal and 
+                                    other work-related details for staffs.
+                                </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                2. How to take attendance?
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                              <p>
+                                  <ol>
+                                      <li>Find "Attendance" and select "Take Attendance" on left 
+                                          menu.
+                                      </li>
+                                      <li>Select your attendance date and press "Clock In" button to 
+                                          submit your attendance record.
+                                      </li>
+                                      <li>
+                                        You can also select "Attendance Record" on left menu and 
+                                        clock out by pressing the "Clock Out" button.
+                                      </li>
+                                  </ol>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-header" id="headingThree">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                3. How can I specify my attendance record?
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                              <p>
+                                  <ol>
+                                      <li>
+                                        Find "Attendance" and select "Attendanve Record" on left 
+                                        menu.
+                                      </li>
+                                      <li>
+                                          You can fetch your attendance record by choosing
+                                          both of <b>Start Date</b> and <b>End Date</b>.
+                                      </li>
+                                  </ol>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-header" id="headingFour">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                4. How can I apply for leave?
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                            <div class="card-body">
+                              <p>
+                                  <ol>
+                                      <li>
+                                        Find "Leave" and select "Apply Leave" on left menu.
+                                      </li>
+                                      <li>
+                                        You will need to choose your leave date and write down your
+                                        reasons for apply leave.
+                                      </li>
+                                      <li>
+                                        Then, please be patiently to wait for an approval from admin.
+                                      </li>
+                                      <li>
+                                          You can review your leave applied history on 
+                                          "Leave Applied History".
+                                      </li>
+                                  </ol>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-header" id="headingFive">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                5. How can I contact to admin?
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                            <div class="card-body">
+                              <p>
+                                  Look like you might have some issues, don't worry, you can easier to 
+                                  contact the admin for help you to solve your problems!
+                                  <ol>
+                                      <li>
+                                        Find "Feedback" and select "Send Feedback" on left menu.
+                                      </li>
+                                      <li>
+                                        Write down your messages below the form and press "Send Feedback"
+                                        button.
+                                      </li>
+                                      <li>
+                                        You can also view your reply from admin by select 
+                                        "Feedback History".
+                                      </li>
+                                  </ol>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-header" id="headingSix">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                6. What is ToDO?
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                            <div class="card-body">
+                              <p>
+                                  ToDo is a mini tool for staffs to record their own tasks to avoid forgetting.
+                                  <ol>
+                                      <li>You can add a new task by pressing "New Task" button and save it.
+                                      </li>
+                                      <li>
+                                        You can also edit your task by clicking the "Edit" button.
+                                      </li>
+                                      <li>
+                                        You can delete the task by one by one or multiple choices.
+                                      </li>
+                                  </ol>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card">
+                          <div class="card-header" id="headingSeven">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                7. How to edit my profile?
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                            <div class="card-body">
+                              <p>
+                                  <ol>
+                                      <li>
+                                        Click your own username on left menu so you can view your own profile
+                                        and edit.
+                                      </li>
+                                      <li>
+                                        To edit your profile, click "Settings" and change your details here
+                                        then press "Save Change" button after you complete edited.
+                                      </li>
+                                      <li>
+                                        You can change your password by enter your new password or just inore
+                                        the password field.
+                                      </li>
+                                  </ol>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-6 text-center">
+                  <img src="{% static 'images/FAQ.png' %}" alt="FAQ" class="img-fluid " style="width: 450px;">
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mt-3 text-center">
+                  <p class="lead" id="helpful">
+                      Was this helpful? &nbsp;&nbsp;
+                      <a href="#thanks" id="yes" class="btn btn-outline-primary">Yes</a> &nbsp;
+                      <a href="#sorry" id="no" class="btn btn-outline-primary">No</a>
+                  </p>
+
+                  <p id="thanks" class="thanks">
+                    Thanks for your feedback!
+                  </p>
+                  <p id="sorry" class="sorry">
+                      <b>Sorry about that</b>, <br>
+                      you can send your <a href="{% url 'feedbackStaff' %}">feedback</a> for further details, Thank You.
+                  </p>
+              </div>
+          </div>
+        </section>
+    {% endblock %}
+    {% block site_js %}
+        <script>
+          /* Get the following Id */
+          let helpful = document.getElementById("helpful")
+          let thanks = document.getElementById("thanks")
+          let sorry = document.getElementById("sorry")
+          let yes = document.getElementById("yes")
+          let no = document.getElementById("no")
+
+          //Binding onclick event on Yes button
+          yes.addEventListener('click', function(){
+            thanks.style.display = "block"
+            sorry.style.display = "none"
+            helpful.style.display = "none"
+          })
+
+          //Binding onclick event on No button
+          no.addEventListener('click', function(){
+            sorry.style.display = "block"
+            thanks.style.display = "none"
+            helpful.style.display = "none"
+          })
+        </script>
+    {% endblock %}

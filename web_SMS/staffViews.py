@@ -140,7 +140,7 @@ def doEditProfileStaff(request):
         captcha_json = json.loads(captcha_server_response.text)
         #Check response of success is False, then redirect user back to profileStaff
         if captcha_json['success'] == False:
-            messages.error(request, "Please tick(✔️) the reCaptcha Verification and try again.")
+            messages.error(request, "Please tick(✔️) the reCaptcha Verification to ensure you're not a robot.")
             return redirect('profileStaff')
 
         #Get the field value from user input
@@ -223,7 +223,7 @@ def doClockInStaff(request):
             messages.success(request, "Clock in successfully!")
             return redirect('takeAttendanceStaff')
         except:
-            messages.error(request, "Somethings error...Please try again.")
+            messages.error(request, "Please choose your attendance date and try again...")
             return redirect('takeAttendanceStaff')
     else:
         return redirect('takeAttendanceStaff')
@@ -367,3 +367,11 @@ def doDeleteTask(request, task_id):
     #Delete the following task
     task.delete()
     return redirect('todoList')
+
+#frequentlyAskedQuestion
+def frequentlyAskedQuestion(request):
+    staff = Staffs.objects.get(admin=request.user.id)
+    context = {
+        'staff' : staff,
+    }
+    return render(request, 'smsys_staff/FAQ.html', context)

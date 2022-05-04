@@ -55,4 +55,5 @@ urlpatterns = [
     path('doEditTask/<str:task_id>', staffViews.doEditTask, name='doEditTask'),
     path('doDeleteTask/<str:task_id>', staffViews.doDeleteTask, name='doDeleteTask'),
     path('doDeleteTaskByCheck/', staffViews.doDeleteTaskByCheck, name='doDeleteTaskByCheck'),
+    path('faq', staffViews.frequentlyAskedQuestion, name='frequentlyAskedQuestion'),
 ]

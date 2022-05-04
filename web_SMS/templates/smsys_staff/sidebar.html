@@ -173,6 +173,17 @@
             <p>Todo </p>
             </a>
         </li>
+        <li class="nav-item">
+            {% url 'frequentlyAskedQuestion' as frequentlyAskedQuestion %}
+            <a href="{{ frequentlyAskedQuestion }}" class="nav-link 
+                {% if request.path == frequentlyAskedQuestion %} 
+                    active 
+                {% endif %}"
+            >
+            <i class="nav-icon fa-solid fa-question"></i>
+            <p>FAQ </p>
+            </a>
+        </li>
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
