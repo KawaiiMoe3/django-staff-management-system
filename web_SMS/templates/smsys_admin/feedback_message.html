@@ -31,7 +31,7 @@
                             <th>#.</th>
                             <th>Staff ID</th>
                             <th>Username</th>
-                            <th>Messages/Sended On</th>
+                            <th>Messages</th>
                             <th>Reply</th>
                         </tr>
                     </thead>
@@ -41,7 +41,10 @@
                             <td>{{ message.id }}</td>
                             <td>{{ message.staff_id.admin.id }}</td>
                             <td>{{ message.staff_id.admin.username }}</td>
-                            <td>{{ message.feedback }}, ({{ message.created_at }})</td>
+                            <td>
+                                <span class="text-info">[{{ message.created_at }}]</span>,<br>
+                                {{ message.feedback }}
+                            </td>
                             <td>
                                 {% if message.feedback_reply == "" %}
                                     <button class="btn-sm btn-primary reply_open_modal" data-toggle="modal" data-target="#reply_modal">
@@ -49,7 +52,8 @@
                                         Reply
                                     </button>
                                 {% else %}
-                                    <span class="text-primary">{{ message.feedback_reply }}</span>
+                                    <span class="text-info">[{{ message.updated_at }}]</span>,<br>
+                                    <span class="">{{ message.feedback_reply }}</span>
                                 {% endif %}
                             </td>
                         </tr>

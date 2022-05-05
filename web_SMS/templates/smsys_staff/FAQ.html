@@ -235,46 +235,10 @@
                   <img src="{% static 'images/FAQ.png' %}" alt="FAQ" class="img-fluid " style="width: 450px;">
                 </div>
             </div>
-            <div class="row">
-              <div class="col-12 mt-3 text-center">
-                  <p class="lead" id="helpful">
-                      Was this helpful? &nbsp;&nbsp;
-                      <a href="#thanks" id="yes" class="btn btn-outline-primary">Yes</a> &nbsp;
-                      <a href="#sorry" id="no" class="btn btn-outline-primary">No</a>
-                  </p>
-
-                  <p id="thanks" class="thanks">
-                    Thanks for your feedback!
-                  </p>
-                  <p id="sorry" class="sorry">
-                      <b>Sorry about that</b>, <br>
-                      you can send your <a href="{% url 'feedbackStaff' %}">feedback</a> for further details, Thank You.
-                  </p>
-              </div>
-          </div>
+            <!-- Was this helpful? -->
+            {% include "base/askHelpful.html" %}
         </section>
     {% endblock %}
     {% block site_js %}
-        <script>
-          /* Get the following Id */
-          let helpful = document.getElementById("helpful")
-          let thanks = document.getElementById("thanks")
-          let sorry = document.getElementById("sorry")
-          let yes = document.getElementById("yes")
-          let no = document.getElementById("no")
-
-          //Binding onclick event on Yes button
-          yes.addEventListener('click', function(){
-            thanks.style.display = "block"
-            sorry.style.display = "none"
-            helpful.style.display = "none"
-          })
-
-          //Binding onclick event on No button
-          no.addEventListener('click', function(){
-            sorry.style.display = "block"
-            thanks.style.display = "none"
-            helpful.style.display = "none"
-          })
-        </script>
+        <script src="{% static 'js/askHelpful.js' %}"></script>
     {% endblock %}

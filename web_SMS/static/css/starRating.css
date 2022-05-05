@@ -1,0 +1,13 @@
+.fa-star{
+    font-size: 25px !important;
+}
+
+/* Star checked's color */
+.checked {
+    color: orange;
+}
+
+.rate-btn{
+    border: none !important;
+    background-color: inherit !important;
+}

@@ -3,15 +3,16 @@
 <!-- render static file in this html file -->
 {% load static %}
 
-    {% block title %}Leave Applied History{% endblock %}
+    {% block title %}Feedback History{% endblock %}
     {% block site_css %}
         <!-- DataTables -->
         <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
         <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
         <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+        
     {% endblock %}
 
-    {% block content_title %}Leave Applied History{% endblock %}
+    {% block content_title %}Feedback History{% endblock %}
 
     {% block content_body %}
         <!-- Main content -->
@@ -21,7 +22,7 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Leave Applied History Details</h3>
+                      <h3 class="card-title">Feedback History Details</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -37,15 +38,20 @@
                             {% for data in feedback_data %}
                             <tr>
                                 <td>{{ data.id }}</td>
-                                <td>{{ data.feedback }}</td>
+                                <td>
+                                  <span class="text-info">[{{ data.created_at }}]</span>,<br>
+                                  {{ data.feedback }}
+                                </td>
                                 <td>
                                   {% if data.feedback_reply == "" %}
                                      <span class="text-info text-bold">
                                         <i class="fa-regular fa-face-smile"></i>
-                                        We have received your feedback, please be patiently waiting for a reply.
+                                        We have received your feedback,<br>
+                                        please be patiently waiting for a reply.
                                       </span> 
                                   {% else %}
-                                    <span class="text-primary">{{ data.feedback_reply }}</span>
+                                    <span class="text-info">[{{ data.updated_at }}]</span>,<br>
+                                    <span class="">{{ data.feedback_reply }}</span>
                                   {% endif %}
                                 </td>
                             </tr>

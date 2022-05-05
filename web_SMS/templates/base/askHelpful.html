@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-12 mt-3 text-center">
+        <p class="lead" id="helpful">
+            Was this helpful? &nbsp;&nbsp;
+            <a href="#thanks" id="yes" class="btn btn-outline-primary">Yes</a> &nbsp;
+            <a href="#sorry" id="no" class="btn btn-outline-primary">No</a>
+        </p>
+
+        <p id="thanks" class="thanks">
+            Thanks for your feedback!
+        </p>
+        <p id="sorry" class="sorry">
+            <b>Sorry about that</b>, <br>
+            you can send your <a href="{% url 'feedbackStaff' %}">feedback</a> for further details, Thank You.
+        </p>
+    </div>
+</div>

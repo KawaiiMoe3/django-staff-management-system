@@ -74,6 +74,7 @@ def doFeedbackStaff(request):
         try:
             #Passing the value from FeedbackStaff model
             feedbackStaff = FeedBackStaffs(staff_id=staff_id, feedback=feedback, feedback_reply="")
+            feedbackStaff.created_at = datetime.now()
             feedbackStaff.save()
             messages.success(request, "Feedback sent successfully!")
             return redirect('feedbackStaff')

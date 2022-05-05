@@ -229,6 +229,7 @@ def FeedbackMessageReply(request):
     try:
         feedback = FeedBackStaffs.objects.get(id=feedback_id)
         feedback.feedback_reply = reply_message
+        feedback.updated_at = datetime.now()
         feedback.save()
         return HttpResponse("True")
     except:
