@@ -67,14 +67,14 @@
                                 {% if leave.leave_status == 0 %}
                                     <div class="row">
                                         <div class="col-sm-10">
-                                            <a href="{% url 'doApproveStaffLeave' leave_id=leave.id %}" class="btn-sm btn-success">
+                                            <a href="{% url 'doApproveStaffLeave' leave_id=leave.id %}" id="approveBtn" class="btn-sm btn-success">
                                                 <i class="fa-solid fa-circle-check"></i>
                                                 Approve
                                             </a>
                                         </div>
                                         <hr>
                                         <div class="col-sm-10">
-                                            <a href="{% url 'doRejectStaffLeave' leave_id=leave.id %}" class="btn-sm btn-danger">
+                                            <a href="{% url 'doRejectStaffLeave' leave_id=leave.id %}" id="rejectBtn" class="btn-sm btn-danger">
                                                 <i class="fa-solid fa-circle-xmark"></i>
                                                 Reject
                                             </a>
@@ -119,29 +119,6 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="reply_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Reply message to @<span id="reply_name" class="text-primary text-bold"></span></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="reply_id" name="reply_id">
-                <label>Message</label>
-                <textarea class="form-control" id="reply_message" cols="10" rows="5"></textarea>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button id="reply_btn" type="button" class="btn btn-primary">Send Reply</button>
-            </div>
-        </div>
-        </div>
-    </div>
     {% endblock %}
 
 {% block site_js %}
@@ -180,46 +157,81 @@
     <script>
         //Function will trigger when page is ready
         $(document).ready(function(){
-            //Click listener : Get the current ID(#.) and username from current row when button clicked
-            $(".reply_open_modal").click(function(){
-                let id = $(this).parents("tr").children("td:eq(0)").text()
+            //Approve
+            $(document).on('click', '#approveBtn', function(e){
+                //Prevent the event from occur until approve button pressed
+                e.preventDefault()
+                //Get the current username, leave Id and leave date from current row when approve button pressed
+                let leave_id = $(this).parents("tr").children("td:eq(0)").text()
                 let username = $(this).parents("tr").children("td:eq(2)").text()
-                //Update ID value in hidden input and Show the username in span
-                $("#reply_id").val(id)
-                $("#reply_name").text(username)
+                let leaveDate = $(this).parents("tr").children("td:eq(3)").text()
+                // return confirm("Are you sure to approve " + username + " to take leave on " + leaveDate + "?")
+
+                //Confirm popup
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Approve "+username+" to take leave on "+leaveDate+"?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Approve'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'doApproveStaffLeave/'+leave_id,
+                            success: function(response){
+                                Swal.fire(
+                                    'Approved!',
+                                    username+' has been approved to take leave on '+leaveDate+'.',
+                                    'success',
+                                ).then((ok) => {
+                                    //Reload current page after OK button pressed
+                                    location.reload()
+                                })
+                            }
+                        })
+                        // location.href = $(this).attr('href')
+                    }
+                })
             })
 
-            //Get id of Send Reply button
-            $(document).on("click", "#reply_btn", function(){
-                //After clicked, the button cannot press until reply sent successfully
-                $(this).attr("disabled", "disabled")
-                //Meanwhile, the button will change the text to "Sending Reply..."
-                $(this).text("Sending Reply...")
-                
-                //Get id and textarea's value
-                let id = $("#reply_id").val()
-                let message = $("#reply_message").val()
+            //Reject
+            $(document).on('click', '#rejectBtn', function(e){
+                //Prevent the event from occur until approve button pressed
+                e.preventDefault()
+                //Get the current username, leave Id and leave date from current row when approve button pressed
+                let leave_id = $(this).parents("tr").children("td:eq(0)").text()
+                let username = $(this).parents("tr").children("td:eq(2)").text()
+                let leaveDate = $(this).parents("tr").children("td:eq(3)").text()
+                // return confirm("Are you sure to reject " + username + " to take leave on " + leaveDate + "?")
 
-                //jQuery Ajax request
-                $.ajax({
-                    url : '{% url 'feedbackMessageReply' %}',
-                    type : 'POST',
-                    data : {reply_id:id, reply_message:message},
-                })
-                //Trigger when request success
-                .done(function(response){
-                    if(response == "True"){
-                        alert("Reply Sent")
+                //Confirm popup
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Reject "+username+" to take leave on "+leaveDate+"?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Reject',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'doRejectStaffLeave/'+leave_id,
+                            success: function(response){
+                                Swal.fire(
+                                    'Rejected!',
+                                    username+' has been rejected to take leave.',
+                                    'success'
+                                ).then((ok) => {
+                                    //Refresh current page and keep scroll position after OK button pressed
+                                    document.location.reload(true)
+                                })
+                            }
+                        })
+                        // location.href = $(this).attr('href')
                     }
-                    else{
-                        alert("Failure to send your reply...")
-                    }
-                    //Reload the current page after reply sent
-                    location.reload()
-                })
-                //Trigger when request failure
-                .fail(function(){
-                    alert("Failure to send your reply...")
                 })
             })
         })

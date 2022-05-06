@@ -171,17 +171,48 @@
                 //Trigger when request success
                 .done(function(response){
                     if(response == "True"){
-                        alert("Reply Sent")
+                        //Check isit textarea is empty or not
+                        if(message != ""){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Reply Sent',
+                            }).then((ok) => {
+                                //Refresh current page and keep scroll position after OK button pressed
+                                document.location.reload(true)
+                            })
+                        }
+                        else{
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Reply Failed',
+                                text: 'Please enter your messages!',
+                            }).then((ok) => {
+                                //Refresh current page and keep scroll position after OK button pressed
+                                document.location.reload(true)
+                            })
+                        }
                     }
                     else{
-                        alert("Failure to send your reply...")
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Reply Failed',
+                            text: 'Failure to send your reply...',
+                        }).then((ok) => {
+                            //Refresh current page and keep scroll position after OK button pressed
+                            document.location.reload(true)
+                        })
                     }
-                    //Reload the current page after reply sent
-                    location.reload()
                 })
                 //Trigger when request failure
                 .fail(function(){
-                    alert("Failure to send your reply...")
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Reply Failed',
+                        text: 'Failure to send your reply...',
+                    }).then((ok) => {
+                        //Refresh current page and keep scroll position after OK button pressed
+                        document.location.reload(true)
+                    })
                 })
             })
         })

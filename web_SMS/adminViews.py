@@ -306,7 +306,7 @@ def doEditProfileAdmin(request):
         captcha_json = json.loads(captcha_server_response.text)
         #Check response of success is False, then redirect user back to profileStaff
         if captcha_json['success'] == False:
-            messages.error(request, "Please tick(✔️) the reCaptcha Verification and try again.")
+            messages.error(request, "Please tick(✔️) the reCaptcha Verification to ensure you're not a robot.")
             return redirect('editProfileAdmin')
 
         #Get the field value from user input
