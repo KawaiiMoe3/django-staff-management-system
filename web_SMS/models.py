@@ -42,7 +42,7 @@ class Staffs(models.Model):
 #Create Attendance report model
 class AttendanceReport(models.Model):
     id = models.AutoField(primary_key=True)
-    staff_id = models.ForeignKey(Staffs, on_delete=models.DO_NOTHING)
+    staff_id = models.ForeignKey(Staffs, on_delete=models.CASCADE)
     attendance_date = models.DateField(default=timezone.now)
     status = models.IntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now)

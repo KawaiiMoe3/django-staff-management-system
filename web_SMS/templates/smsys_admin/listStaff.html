@@ -147,19 +147,66 @@
                 "responsive": true,
               });
             });
+
+            
           </script>
-          <script type="text/javascript">
+          <script>
             //Function will trigger when page is ready
             $(document).ready(function(){
-              $(document).on('click', '#deleteStaffBtn', function(){
-                //Get the current username from current row when delete button clicked
-                let username = $(this).parents("tr").children("td:eq(2)").text()
-                return confirm("Are you sure to delete current staff, " + username +"?")
+              $(document).on('click', '#deleteStaffBtn', function(e){
+                  //Prevent the event from occur until delete button pressed
+                  e.preventDefault()
+                  //Get the current staff Id and username from current row when delete button clicked
+                  let staff_id = $(this).parents("tr").children("td:eq(0)").text()
+                  let username = $(this).parents("tr").children("td:eq(2)").text()
+                  // return confirm("Are you sure to delete current staff, " + username +"?")
+
+                  //Confirm popup
+                  Swal.fire({
+                      title: 'Are you sure?',
+                      text: "Delete current staff, "+username+"?",
+                      icon: 'question',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Delete'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                          url: 'doDeleteStaff/'+staff_id,
+                          success: function(response){
+                            Swal.fire(
+                                'Deleted!',
+                                username+' has been deleted.',
+                                'success',
+                            ).then((ok) => {
+                                //Reload current page after OK button pressed
+                                document.location.reload(true)
+                            })
+                          }
+                        })
+                        // location.href = $(this).attr('href')
+                    }
+                  })
+                })
               })
 
               //Get the deleteBtnByCheck button and binding an onclick event
-              $('#deleteBtnByCheck').click(function(){
-                  if(confirm("Are you sure to delete the selected staffs?")){
+              $('#deleteBtnByCheck').click(function(e){
+                  //Prevent the event from occur until delete button pressed
+                  e.preventDefault()
+
+                  //Confirm popup
+                  Swal.fire({
+                      title: 'Are you sure?',
+                      text: "To delete all the selected staffs?",
+                      icon: 'question',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'Delete'
+                  }).then((result) => {
+                    if(result.isConfirmed){
                       //Get an empty id array and csrf_token
                       let id = []
                       let csrf_token = $('input[name=csrfmiddlewaretoken]').val()
@@ -168,14 +215,21 @@
                       $(':checkbox:checked').each(function(staffID){
                           id[staffID] = $(this).val()
                       })
+
                       //Check whether checkbox was checked or not
                       if(id.length === 0){
                           //Not checked at all
-                          alert("Please select which staff you want to delete.")
+                          // alert("Please select which staff you want to delete.")
+
+                          Swal.fire(
+                            'Delete Failure!',
+                            'Please select which staff you want to delete.',
+                            'error'
+                          )
                       }
                       else{
                           //Checked
-                           console.log(id) //Testing to get task id
+                          console.log(id) //Testing to get task id
 
                           //Using ajax to request for delete the tasks
                           $.ajax({
@@ -194,8 +248,8 @@
                               }
                           })
                       }
-                  }
+                    }
+                  })
               })
-            })
           </script>
     {% endblock %}

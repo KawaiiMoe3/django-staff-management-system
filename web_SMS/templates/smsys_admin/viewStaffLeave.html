@@ -171,7 +171,7 @@
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "Approve "+username+" to take leave on "+leaveDate+"?",
-                    icon: 'warning',
+                    icon: 'question',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
@@ -187,7 +187,7 @@
                                     'success',
                                 ).then((ok) => {
                                     //Reload current page after OK button pressed
-                                    location.reload()
+                                    document.location.reload(true)
                                 })
                             }
                         })
@@ -210,7 +210,7 @@
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "Reject "+username+" to take leave on "+leaveDate+"?",
-                    icon: 'warning',
+                    icon: 'question',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
