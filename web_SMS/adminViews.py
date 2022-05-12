@@ -12,7 +12,21 @@ from django.views.decorators.csrf import csrf_exempt
 
 #Page Index
 def Index(request):
-    return render(request, 'smsys_admin/index.html')
+    #Count the following quantity
+    staffCount = Staffs.objects.all().count()
+    feedbackCount = FeedBackStaffs.objects.all().count()
+    staffLeave = LeaveReportStaff.objects.filter(leave_status=0).count() #Count Pending leave
+    allAttendanceStaff = AttendanceReport.objects.all().count()
+    attendancePresentStaff = AttendanceReport.objects.filter(status=2).count()
+    attendanceRate = (attendancePresentStaff / allAttendanceStaff) * 100
+    #Create a dictionary
+    context = {
+        'staffCount' : staffCount,
+        'feedbackCount' : feedbackCount,
+        'attendanceRate' : attendanceRate,
+        'staffLeave' : staffLeave,
+    }
+    return render(request, 'smsys_admin/index.html', context)
 
 #Page addStaff
 def addStaff(request):
