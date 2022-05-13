@@ -10,8 +10,19 @@ from datetime import datetime
 #Page Index
 def Index(request):
     staff = Staffs.objects.get(admin=request.user.id)
+    #Count the following data and show on home page
+    todoCount = TodoTask.objects.all().filter(staff_id=staff).count()
+    feedbackCount = FeedBackStaffs.objects.all().filter(staff_id=staff).count()
+    leaveCount = LeaveReportStaff.objects.all().filter(staff_id=staff).count()
+    allAttendanceRecord = AttendanceReport.objects.all().filter(staff_id=staff).count()
+    attendancePresentRecord = AttendanceReport.objects.filter(staff_id=staff,status=2).count()
+    attendanceRate = round((attendancePresentRecord / allAttendanceRecord) * 100, 2)
     context = {
         'staff' : staff,
+        'todoCount' : todoCount,
+        'feedbackCount': feedbackCount,
+        'leaveCount' : leaveCount,
+        'attendanceRate' : attendanceRate,
     }
     return render(request, 'smsys_staff/index.html', context)
 

@@ -18,7 +18,8 @@ def Index(request):
     staffLeave = LeaveReportStaff.objects.filter(leave_status=0).count() #Count Pending leave
     allAttendanceStaff = AttendanceReport.objects.all().count()
     attendancePresentStaff = AttendanceReport.objects.filter(status=2).count()
-    attendanceRate = (attendancePresentStaff / allAttendanceStaff) * 100
+    #Round the attendance rate to 2 decimal 
+    attendanceRate = round((attendancePresentStaff / allAttendanceStaff) * 100, 2)
     #Create a dictionary
     context = {
         'staffCount' : staffCount,
